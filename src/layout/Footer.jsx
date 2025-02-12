@@ -1,7 +1,7 @@
 export default function Footer() {
     return(
         <footer>
-            <p>Hello world!</p>
+            <p>Hello footer world!</p>
         </footer>
     );
 }

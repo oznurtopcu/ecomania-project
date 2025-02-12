@@ -23,8 +23,6 @@ export default function Header() {
                 <a href="#">Pricing</a>
                 <a href="#">Contact</a>
             </nav>
-
-
         </header>
     );
 }
