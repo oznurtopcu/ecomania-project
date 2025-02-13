@@ -31,6 +31,9 @@ export default function HomePage() {
         <ProductCard />
         <ProductCard />
       </div>
+      <div className="slider-content">
+        <Slider />
+      </div>
         </div>
       </div>
     </div>
