@@ -1,5 +1,6 @@
 import ShopCard from "../components/ShopCard";
 import Slider from "../components/Slider";
+import ProductCard from "../components/ProductCard";
 
 export default function HomePage() {
   return (
@@ -23,9 +24,13 @@ export default function HomePage() {
             <ShopCard />
           </div>
         </div>
-        <div className="main-content">
-          <img src="https://placehold.co/324x242" alt="image-3" />
-          <img src="https://placehold.co/324x242" alt="image-4" />
+      </div>
+      <div className="product-cards m-15 flex flex-col gap-4 items-center ">
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+      </div>
         </div>
       </div>
     </div>
