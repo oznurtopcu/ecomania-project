@@ -2,8 +2,8 @@ import { Facebook, Instagram, Twitter } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="">
-      <div className="flex flex-col m-20 gap-8 font-bold">
+    <footer className="font-bold">
+      <div className="flex flex-col m-20 gap-8">
         <div className="flex flex-col gap-4">
           <h3 className="text-[#252B42]">Get In Touch</h3>
           <p className="text-[#737373] ">
