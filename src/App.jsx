@@ -5,11 +5,16 @@ import "./App.css";
 import Header from "./layout/Header";
 import PageContent from "./layout/PageContent";
 import HomePage from "./pages/HomePage";
+import { Route, Switch } from "react-router-dom";
 
 function App() {
   return (
     <PageContent>
-      <HomePage />
+      <Switch>
+        <Route path="/">
+          <HomePage />
+        </Route>
+      </Switch>
     </PageContent>
   );
 }
