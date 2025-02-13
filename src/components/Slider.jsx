@@ -2,6 +2,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
 
 const Slider = () => {
   // const sampleSlides = [
@@ -91,18 +93,30 @@ const Slider = () => {
       slidesPerView={1}
       onSlideChange={() => console.log("slide change")}
       onSwiper={(swiper) => console.log(swiper)}
+      navigation // Okları aktif eder
+      modules={[Navigation]} // Navigation modülünü burada belirtiyoruz
+      className="h-[700px]"
     >
-      <SwiperSlide>
-        <img src="https://placehold.co/414x753" alt="Slide 1" />
+      <SwiperSlide className="">
+        <img
+          className="w-full h-full object-cover"
+          src="https://picsum.photos/seed/picsum/1200/800"
+          alt="Slide 1"
+        />
       </SwiperSlide>
-      <SwiperSlide>
-        <img src="https://placehold.co/414x753" alt="Slide 1" />
+      <SwiperSlide className="">
+        <img
+          className="w-full h-full object-cover"
+          src="https://picsum.photos/seed/picsum/1200/800"
+          alt="Slide 1"
+        />
       </SwiperSlide>
-      <SwiperSlide>
-        <img src="https://placehold.co/414x753" alt="Slide 1" />
-      </SwiperSlide>
-      <SwiperSlide>
-        <img src="https://placehold.co/414x753" alt="Slide 1" />
+      <SwiperSlide className="">
+        <img
+          className="w-full h-full object-cover"
+          src="https://picsum.photos/seed/picsum/1200/800"
+          alt="Slide 1"
+        />
       </SwiperSlide>
     </Swiper>
   );
