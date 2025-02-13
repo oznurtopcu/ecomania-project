@@ -11,9 +11,11 @@ export default function HomePage() {
         {/* <img src="https://placehold.co/414x753" alt="slider" /> */}
       </div>
       <div className="shopping-cards my-15">
-        <div className="main-content text-center m-15">
-          <h3 className="font-bold text-[#252B42]">EDITOR'S PICK</h3>
-          <p>Problems trying to resolve the conflict between </p>
+        <div className="main-content text-center m-15 flex flex-col gap-6 items-center">
+          <h3 className="font-bold text-[#252B42] text-2xl">EDITOR'S PICK</h3>
+          <p className="text-[#737373] text-lg">
+            Problems trying to resolve the conflict between{" "}
+          </p>
         </div>
         <div className="">
           <div className="main-content flex flex-col items-center gap-6 mb-6">
