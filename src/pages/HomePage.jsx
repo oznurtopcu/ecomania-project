@@ -5,7 +5,7 @@ import NewsCard from "../components/NewsCard";
 
 export default function HomePage() {
   return (
-    <div className="@container">
+    <div className="">
       <div className="slider-hero">
         <Slider />
         {/* <img src="https://placehold.co/414x753" alt="slider" /> */}

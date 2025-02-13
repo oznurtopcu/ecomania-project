@@ -7,7 +7,7 @@ export default function PageContent({ children }) {
   return (
     <>
       <Header />
-      <main className="font-montserrat"> {children} </main>
+      <main className="container font-montserrat"> {children} </main>
       <Footer />
     </>
   );
