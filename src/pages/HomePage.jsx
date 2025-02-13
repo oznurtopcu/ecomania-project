@@ -1,6 +1,7 @@
 import ShopCard from "../components/ShopCard";
 import Slider from "../components/Slider";
 import ProductCard from "../components/ProductCard";
+import NewsCard from "../components/NewsCard";
 
 export default function HomePage() {
   return (
@@ -55,6 +56,25 @@ export default function HomePage() {
           </button>
         </div>
         <img src="https://placehold.co/414x407" alt="banner" />
+      </div>
+      <div className="news-content">
+        <p className="text-center text-sky-500 mt-15 font-bold">
+          Practice Advice
+        </p>
+        <div className="text-center m-15 flex flex-col gap-6 items-center">
+          <h2 className="font-bold text-[#252B42] text-4xl leading-12">
+            Featured Products
+          </h2>
+          <p className="text-[#737373] text-xl">
+            Problems trying to resolve the conflict between the two major
+          </p>
+        </div>
+        <div className="product-cards m-15 flex flex-col gap-4 items-center ">
+          <NewsCard className="border-2" />
+          <NewsCard />
+          <NewsCard />
+          <NewsCard />
+        </div>
       </div>
     </div>
   );
