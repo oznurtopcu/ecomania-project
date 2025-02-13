@@ -7,7 +7,7 @@ export default function Header() {
     setIsClicked(!isClicked);
   };
   return (
-    <header className="container font-montserrat">
+    <header className="container mx-auto font-montserrat">
       <div className="flex justify-between items-center m-8 text-3xl text-[#737373]">
         <img src="https://placehold.co/187x58" alt="logo" />
         <nav className="hidden">

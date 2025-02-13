@@ -2,7 +2,7 @@ import { Facebook, Instagram, Twitter } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="container font-bold font-montserrat">
+    <footer className="container mx-auto font-bold font-montserrat">
       <div className="flex flex-col m-20 gap-10 md:flex-row md:justify-evenly">
         <div className="flex flex-col gap-6">
           <h3 className="text-[#252B42] text-2xl">Get In Touch</h3>
