@@ -2,8 +2,8 @@ import { Facebook, Instagram, Twitter } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="font-bold font-montserrat">
-      <div className="flex flex-col m-20 gap-10 md:flex-row">
+    <footer className="container font-bold font-montserrat">
+      <div className="flex flex-col m-20 gap-10 md:flex-row md:justify-evenly">
         <div className="flex flex-col gap-6">
           <h3 className="text-[#252B42] text-2xl">Get In Touch</h3>
           <p className="text-[#737373] ">
@@ -15,10 +15,10 @@ export default function Footer() {
             <Twitter />
           </div>
         </div>
-        <div className="flex flex-col sm:flex-row sm:gap-12">
+        <div className="flex flex-col sm:flex-row sm:gap-16">
           <div>
             <h3 className="text-[#252B42] text-2xl">Company Info</h3>
-            <ul className="text-[#737373] leading-10 my-4">
+            <ul className="text-[#737373] leading-10 my-4 whitespace-nowrap">
               <li>About Us</li>
               <li>Carrier</li>
               <li>We are hiring</li>
@@ -27,7 +27,7 @@ export default function Footer() {
           </div>
           <div>
             <h3 className="text-[#252B42] text-2xl">Features</h3>
-            <ul className="text-[#737373] leading-10 my-4">
+            <ul className="text-[#737373] leading-10 my-4 whitespace-nowrap">
               <li>Business marketing</li>
               <li>User Analytic</li>
               <li>Live Chat</li>
@@ -39,7 +39,7 @@ export default function Footer() {
 
       <div className="m-6 text-[#737373] text-center">
         <p>
-          Made With Love By <br />
+          Made With Love By <br className="md:hidden" />
           Figmaland All Right Reserved
         </p>
       </div>
