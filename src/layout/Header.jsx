@@ -9,7 +9,11 @@ export default function Header() {
   return (
     <header className="container mx-auto font-montserrat">
       <div className="flex justify-between items-center m-8 text-3xl text-[#737373]">
-        <img src="https://placehold.co/187x58" alt="logo" />
+        <img
+          className="w-48"
+          src="https://img.logoipsum.com/348.svg"
+          alt="logo"
+        />
         <nav className="hidden">
           <a href="#">Home</a>
           <a href="#">Product</a>
