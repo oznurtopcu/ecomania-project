@@ -4,27 +4,45 @@ import ProductCard from "../components/ProductCard";
 import NewsCard from "../components/NewsCard";
 
 export default function HomePage() {
+  const shopCardsData = [1, 2, 3, 4]; // Dummy data for ShopCard components
+
   return (
     <div className="">
       <div className="slider-hero">
         <Slider />
-        {/* <img src="https://placehold.co/414x753" alt="slider" /> */}
       </div>
-      <div className="shopping-cards my-15">
-        <div className="main-content text-center m-15 flex flex-col gap-6 items-center">
+      <div className="shopping-cards p-4">
+        <div className="main-content text-center mb-8 flex flex-col gap-6 items-center">
           <h3 className="font-bold text-[#252B42] text-2xl">EDITOR'S PICK</h3>
           <p className="text-[#737373] text-lg">
             Problems trying to resolve the conflict between{" "}
           </p>
         </div>
-        <div className="">
-          <div className="main-content flex flex-col items-center gap-6 mb-6">
-            <ShopCard />
+        {/* Container - 4:2 aspect ratio container */}
+        <div className="w-full aspect-[2/1] flex flex-col md:flex-row gap-4">
+          {/* First card - 2x2 square */}
+          <div className="w-full md:w-2/4 aspect-square">
             <ShopCard />
           </div>
-          <div className="main-content flex flex-col items-center gap-6">
-            <ShopCard />
-            <ShopCard />
+
+          {/* Middle and right section container */}
+          <div className="w-full md:w-2/4 flex flex-col md:flex-row gap-4">
+            {/* Second card - 2x1 rectangle */}
+            <div className="w-full md:w-2/4 aspect-[1/2] md:aspect-[1/2]">
+              <ShopCard />
+            </div>
+
+            {/* Right stack container */}
+            <div className="w-full md:w-2/4 flex flex-col gap-4">
+              {/* Third card - 1x1 square */}
+              <div className="w-full grow-1 relative overflow-hidden">
+                <ShopCard className="absolute inset-0" />
+              </div>
+              {/* Fourth card - 1x1 square */}
+              <div className="w-full grow-1 relative overflow-hidden">
+                <ShopCard className="absolute inset-0" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -72,7 +90,7 @@ export default function HomePage() {
           </p>
         </div>
         <div className="product-cards m-15 flex flex-col gap-4 items-center ">
-          <NewsCard className="border-2" />
+          <NewsCard />
           <NewsCard />
           <NewsCard />
           <NewsCard />
