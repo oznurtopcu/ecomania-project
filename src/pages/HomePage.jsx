@@ -11,7 +11,7 @@ export default function HomePage() {
       <div className="slider-hero">
         <Slider />
       </div>
-      <div className="shopping-cards p-4">
+      <div className="shopping-cards">
         <div className="main-content text-center mb-8 flex flex-col gap-6 items-center">
           <h3 className="font-bold text-[#252B42] text-2xl">EDITOR'S PICK</h3>
           <p className="text-[#737373] text-lg">
@@ -46,7 +46,8 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      <div className="product-cards m-15 flex flex-col gap-4 items-center ">
+      <div className="product-cards">
+        <div className="m-15 flex flex-col gap-4 items-center justify-center"></div>
         <ProductCard />
         <ProductCard />
         <ProductCard />
