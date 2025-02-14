@@ -55,27 +55,33 @@ export default function HomePage() {
       <div className="slider-content">
         <Slider />
       </div>
-      <div className="banner-content">
-        <p className="text-center text-[#BDBDBD] mt-15 font-bold">
-          SUMMER 2020
-        </p>
-        <div className="text-center m-15 flex flex-col gap-6 items-center">
-          <h2 className="font-bold text-[#252B42] text-4xl leading-12">
-            Part of the <br /> Neural <br />
-            Universe
-          </h2>
-          <p className="text-[#737373] text-xl">
-            We know how large <br /> objects will act, but <br /> things on a
-            small scale.
-          </p>
-          <button className="bg-sky-500 text-white rounded-sm px-10 py-4 font-bold">
-            BUY NOW
-          </button>
-          <button className="text-sky-500 bg-white rounded-sm px-10 py-4 font-bold border-sky-500 border-1">
-            Learn More
-          </button>
+      <div className="fluid-content">
+        <div className="flex flex-col md:flex-row-reverse justify-center items-center gap-6">
+          <div className="text-center m-15 flex flex-col gap-6 items-center">
+            <p className="text-center text-[#BDBDBD] m-12 font-bold">
+              SUMMER 2020
+            </p>
+            <h2 className="font-bold text-[#252B42] text-4xl leading-12">
+              Part of the <br /> Neural <br />
+              Universe
+            </h2>
+            <p className="text-[#737373] text-xl">
+              We know how large <br /> objects will act, but <br /> things on a
+              small scale.
+            </p>
+            <button className="bg-sky-500 text-white rounded-sm px-10 py-4 font-bold">
+              BUY NOW
+            </button>
+            <button className="text-sky-500 bg-white rounded-sm px-10 py-4 font-bold border-sky-500 border-1">
+              Learn More
+            </button>
+          </div>
+          <img
+            className="aspect-[1/1] object-cover w-[700px]"
+            src="https://picsum.photos/200/300"
+            alt="banner"
+          />
         </div>
-        <img src="https://placehold.co/414x407" alt="banner" />
       </div>
       <div className="news-content">
         <p className="text-center text-sky-500 mt-15 font-bold">
