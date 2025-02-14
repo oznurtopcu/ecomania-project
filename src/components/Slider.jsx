@@ -33,19 +33,22 @@ export default function Slider() {
           </button>
         </div>
       </SwiperSlide>
-      <SwiperSlide className="">
+      <SwiperSlide className="relative">
         <img
           className="w-full h-full object-cover rounded-lg"
           src="https://picsum.photos/seed/picsum/1200/800"
           alt="Slide 1"
         />
-      </SwiperSlide>
-      <SwiperSlide className="">
-        <img
-          className="w-full h-full object-cover rounded-lg"
-          src="https://picsum.photos/seed/picsum/1200/800"
-          alt="Slide 1"
-        />
+        <div className="absolute top-50 left-0 text-red flex flex-col gap-8 items-center text-center px-12 md:left-20">
+          <h5>SUMMER 2021</h5>
+          <h1 className="font-bold text-5xl">NEW COLLECTION</h1>
+          <p>
+            We know how large objects will act, but things on a small scale.
+          </p>
+          <button className="bg-[#2DC071] text-center py-3 px-8 font-bold text-sm rounded-sm">
+            SHOP NOW
+          </button>
+        </div>
       </SwiperSlide>
     </Swiper>
   );
