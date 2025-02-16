@@ -85,10 +85,12 @@ export default function HomePage() {
         <Slider />
       </div>
       <div className="shopping-cards">
-        <div className="main-content text-center mb-8 flex flex-col gap-6 items-center">
-          <h3 className="font-bold text-[#252B42] text-2xl">EDITOR'S PICK</h3>
-          <p className="text-[#737373] text-lg">
-            Problems trying to resolve the conflict between{" "}
+        <div className="text-center m-15 flex flex-col gap-6 items-center">
+          <h3 className="font-bold text-[#252B42] text-4xl leading-12">
+            EDITOR'S PICK
+          </h3>
+          <p className="text-[#737373] text-xl">
+            Problems trying to resolve the conflict between the two major
           </p>
         </div>
         {/* Container - 4:2 aspect ratio container */}
