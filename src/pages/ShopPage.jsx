@@ -142,6 +142,29 @@ export default function ShopPage() {
     },
   ];
 
+  const clients = [
+    {
+      name: "MEN",
+      image: "https://img.logoipsum.com/348.svg",
+    },
+    {
+      name: "WOMEN",
+      image: "https://img.logoipsum.com/356.svg",
+    },
+    {
+      name: "ACCESSORIES",
+      image: "https://img.logoipsum.com/350.svg",
+    },
+    {
+      name: "KIDS",
+      image: "https://img.logoipsum.com/352.svg",
+    },
+    {
+      name: "SHOES",
+      image: "https://img.logoipsum.com/354.svg",
+    },
+  ];
+
   return (
     <div className="">
       {/* Centered content container */}
@@ -214,6 +237,18 @@ export default function ShopPage() {
           ))}
         </div>
 
+      <div className="client-cards px-4 lg:mx-35">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 place-items-center">
+          {clients.map((client, index) => (
+            <div key={index} className=" my-8">
+              <img
+                className="grayscale hover:grayscale-0 w-48"
+                src={client.image}
+                alt={client.name}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
