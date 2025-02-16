@@ -120,11 +120,20 @@ export default function HomePage() {
         </div>
       </div>
       <div className="product-cards">
-        <div className="m-15 flex flex-col gap-4 items-center justify-center"></div>
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        <div className="text-center m-15 flex flex-col gap-6 items-center">
+          <p className="text-center text-sky-500 font-bold">Practice Advice</p>
+          <h2 className="font-bold text-[#252B42] text-4xl leading-12">
+            Featured Products
+          </h2>
+          <p className="text-[#737373] text-xl">
+            Problems trying to resolve the conflict between the two major
+          </p>
+        </div>
+        <div className="flex md:flex-row flex-col items-center justify-center gap-8">
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
       </div>
       <div className="slider-content">
         <Slider />
