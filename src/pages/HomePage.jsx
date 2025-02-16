@@ -81,116 +81,131 @@ export default function HomePage() {
 
   return (
     <div className="">
-      <div className="slider-hero">
+      {/* Full width slider */}
+      <div className="w-full">
         <Slider />
       </div>
-      <div className="shopping-cards">
-        <div className="text-center m-15 flex flex-col gap-6 items-center">
-          <h3 className="font-bold text-[#252B42] text-4xl leading-12">
-            EDITOR'S PICK
-          </h3>
-          <p className="text-[#737373] text-xl">
-            Problems trying to resolve the conflict between the two major
-          </p>
-        </div>
-        {/* Container - 4:2 aspect ratio container */}
-        <div className="w-full aspect-[2/1] flex flex-col md:flex-row gap-4">
-          {/* First card - 2x2 square */}
-          <div className="w-full md:w-2/4 aspect-square">
-            <ShopCard />
-          </div>
 
-          {/* Middle and right section container */}
-          <div className="w-full md:w-2/4 flex flex-col md:flex-row gap-4">
-            {/* Second card - 2x1 rectangle */}
-            <div className="w-full md:w-2/4 aspect-[1/2] md:aspect-[1/2]">
+      {/* Centered content container */}
+      <div className="container mx-auto px-4">
+        <div className="shopping-cards my-20 mx-12 md:mx-35">
+          <div className="text-center mb-12 flex flex-col gap-6 items-center">
+            <h3 className="font-bold text-[#252B42] text-4xl leading-12">
+              EDITOR'S PICK
+            </h3>
+            <p className="text-[#737373] text-xl">
+              Problems trying to resolve the conflict between the two major
+            </p>
+          </div>
+          {/* Container - 4:2 aspect ratio container */}
+          <div className="w-full aspect-[2/1] flex flex-col md:flex-row gap-4">
+            {/* First card - 2x2 square */}
+            <div className="w-full md:w-2/4 aspect-square">
               <ShopCard />
             </div>
 
-            {/* Right stack container */}
-            <div className="w-full md:w-2/4 flex flex-col gap-4">
-              {/* Third card - 1x1 square */}
-              <div className="w-full grow-1 relative overflow-hidden">
-                <ShopCard className="absolute inset-0" />
+            {/* Middle and right section container */}
+            <div className="w-full md:w-2/4 flex flex-col md:flex-row gap-4">
+              {/* Second card - 2x1 rectangle */}
+              <div className="w-full md:w-2/4 aspect-[1/2] md:aspect-[1/2]">
+                <ShopCard />
               </div>
-              {/* Fourth card - 1x1 square */}
-              <div className="w-full grow-1 relative overflow-hidden">
-                <ShopCard className="absolute inset-0" />
+
+              {/* Right stack container */}
+              <div className="w-full md:w-2/4 flex flex-col gap-4">
+                {/* Third card - 1x1 square */}
+                <div className="w-full grow-1 relative overflow-hidden">
+                  <ShopCard className="absolute inset-0" />
+                </div>
+                {/* Fourth card - 1x1 square */}
+                <div className="w-full grow-1 relative overflow-hidden">
+                  <ShopCard className="absolute inset-0" />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="product-cards">
-        <div className="text-center m-15 flex flex-col gap-6 items-center">
-          <p className="text-center text-sky-500 font-bold">Practice Advice</p>
-          <h2 className="font-bold text-[#252B42] text-4xl leading-12">
-            Featured Products
-          </h2>
-          <p className="text-[#737373] text-xl">
-            Problems trying to resolve the conflict between the two major
-          </p>
-        </div>
-        <div className="flex md:flex-row flex-col items-center justify-center gap-8">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </div>
-      <div className="slider-content">
-        <Slider />
-      </div>
-      <div className="fluid-content">
-        <div className="flex flex-col md:flex-row-reverse justify-center items-center gap-6">
-          <div className="text-center md:text-left m-15 flex flex-col gap-6 items-center md:items-start">
-            <p className="text-center md:text-left text-[#BDBDBD] m-12 font-bold">
-              SUMMER 2020
+
+        <div className="product-cards my-20">
+          <div className="text-center mb-12 flex flex-col gap-6 items-center">
+            <p className="text-center text-sky-500 font-bold">
+              Practice Advice
             </p>
             <h2 className="font-bold text-[#252B42] text-4xl leading-12">
-              Part of the <br className="md:hidden" /> Neural{" "}
-              <br className="md:hidden" />
-              Universe
+              Featured Products
             </h2>
-            <p className="text-center md:text-left text-[#737373] text-xl">
-              We know how large <br className="md:hidden" /> objects will act,
-              but <br className="md:hidden" /> things on a small scale.
+            <p className="text-[#737373] text-xl">
+              Problems trying to resolve the conflict between the two major
             </p>
-            <div className="flex flex-col justify-center md:flex-row md:justify-start gap-4">
-              <button className="bg-sky-500 text-white rounded-sm px-10 py-4 font-bold">
-                BUY NOW
-              </button>
-              <button className="text-sky-500 bg-white rounded-sm px-10 py-4 font-bold border-sky-500 border-1">
-                Learn More
-              </button>
-            </div>
           </div>
-          <img
-            className="aspect-[1/1] object-cover md:w-[40%] my-20"
-            src="https://picsum.photos/800/300"
-            alt="banner"
-          />
+          <div className="flex md:flex-row flex-col items-center justify-center gap-8">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
         </div>
       </div>
-      <div className="news-content">
-        <p className="text-center text-sky-500 mt-15 font-bold">
-          Practice Advice
-        </p>
-        <div className="text-center m-15 flex flex-col gap-6 items-center">
-          <h2 className="font-bold text-[#252B42] text-4xl leading-12">
-            Featured Products
-          </h2>
-          <p className="text-[#737373] text-xl">
-            Problems trying to resolve the conflict between the two major
-          </p>
-        </div>
-        <div className="product-cards m-15 flex md:flex-row flex-col gap-4 items-start justify-center">
-          {news.map((newsItem) => (
-            <NewsCard
-              key={newsItem.title}
-              news={newsItem}
-              className="md:w-1/3"
+
+      {/* Full width slider */}
+      <div className="w-full">
+        <Slider />
+      </div>
+
+      {/* Centered content container */}
+      <div className="container mx-auto px-4">
+        <div className="fluid-content my-20 md:mx-35">
+          <div className="flex flex-col md:flex-row-reverse justify-center items-center gap-6">
+            <div className="text-center md:text-left m-15 flex flex-col gap-6 items-center md:items-start">
+              <p className="text-center md:text-left text-[#BDBDBD] m-12 font-bold">
+                SUMMER 2020
+              </p>
+              <h2 className="font-bold text-[#252B42] text-4xl leading-12">
+                Part of the <br className="md:hidden" /> Neural{" "}
+                <br className="md:hidden" />
+                Universe
+              </h2>
+              <p className="text-center md:text-left text-[#737373] text-xl">
+                We know how large <br className="md:hidden" /> objects will act,
+                but <br className="md:hidden" /> things on a small scale.
+              </p>
+              <div className="flex flex-col justify-center md:flex-row md:justify-start gap-4">
+                <button className="bg-sky-500 text-white rounded-sm px-10 py-4 font-bold">
+                  BUY NOW
+                </button>
+                <button className="text-sky-500 bg-white rounded-sm px-10 py-4 font-bold border-sky-500 border-1">
+                  Learn More
+                </button>
+              </div>
+            </div>
+            <img
+              className="aspect-[1/1] object-cover md:w-[40%] my-20"
+              src="https://picsum.photos/800/300"
+              alt="banner"
             />
-          ))}
+          </div>
+        </div>
+
+        <div className="news-content my-20 mx-12 md:mx-35">
+          <div className="text-center mb-12 flex flex-col gap-6 items-center">
+            <p className="text-center text-sky-500 font-bold">
+              Practice Advice
+            </p>
+            <h2 className="font-bold text-[#252B42] text-4xl leading-12">
+              Featured Products
+            </h2>
+            <p className="text-[#737373] text-xl">
+              Problems trying to resolve the conflict between the two major
+            </p>
+          </div>
+          <div className="product-cards flex md:flex-row flex-col items-start justify-between gap-4">
+            {news.map((newsItem) => (
+              <NewsCard
+                key={newsItem.title}
+                news={newsItem}
+                className="md:w-1/3"
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
