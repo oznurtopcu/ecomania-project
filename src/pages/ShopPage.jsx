@@ -181,11 +181,29 @@ export default function ShopPage() {
           ))}
         </div>
       </div>
+      <div className="product-list px-4 lg:m-35">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 font-bold">
+          <div className="flex flex-col md:flex-row gap-10 items-center">
+            <p className="text-[#737373] text-sm">Showing all 12 results</p>
+            <div className="flex items-center gap-4">
+              <p className="text-[#737373] text-sm">Views:</p>
+              <button className="text-[#252B42] text-sm font-bold">
+                <Grid3x3 />
+              </button>
+              <button className="text-[#737373] text-sm">
+                <List />
+              </button>
+            </div>
           </div>
-          <div className="flex md:flex-row flex-col items-center justify-center gap-8">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+          <div className="flex flex-row gap-4 items-center">
+            <select className="px-4 py-2 border border-[#DEDEDE] rounded-md text-sm text-[#737373]">
+              <option>Popularity</option>
+              <option>Price: Low to High</option>
+              <option>Price: High to Low</option>
+            </select>
+            <button className="px-4 py-2 bg-[#23A6F0] text-white rounded-md text-sm">
+              Filter
+            </button>
           </div>
         </div>
       </div>
