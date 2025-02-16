@@ -1,4 +1,3 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -37,33 +36,35 @@ const slides = [
 
 export default function Slider() {
   return (
-    <Swiper
-      spaceBetween={50}
-      slidesPerView={1}
-      navigation // Okları aktif eder
-      modules={[Navigation, Autoplay]} // Navigation modülünü burada belirtiyoruz
-      className="h-[700px]"
-      autoplay={{ delay: 5000, disableOnInteraction: false }} // 2 saniyede bir geçiş yapacak
-      loop={true} // Sonsuz döngü
-      speed={1000} //geçişi yavaşlatıyor
-    >
-      {slides.map((slide) => (
-        <SwiperSlide key={slide.id} className="relative">
-          <img
-            className="w-full h-full object-cover rounded-lg"
-            src={slide.image}
-            alt={slide.title}
-          />
-          <div className="absolute top-50 left-0 text-sky-700 flex flex-col gap-8 items-center text-center px-12 md:left-20 max-w-2xl">
-            <h5>{slide.season}</h5>
-            <h1 className="font-bold text-5xl">{slide.title}</h1>
-            <p>{slide.description}</p>
-            <button className="bg-[#2DC071] text-center py-3 px-8 font-bold text-sm rounded-sm">
-              {slide.buttonText}
-            </button>
-          </div>
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    <>
+      <Swiper
+        spaceBetween={50}
+        slidesPerView={1}
+        navigation // Okları aktif eder
+        modules={[Navigation, Autoplay]} // Navigation modülünü burada belirtiyoruz
+        className="h-[700px]"
+        autoplay={{ delay: 5000, disableOnInteraction: false }} // 5 saniyede bir geçiş yapacak
+        loop={true} // Sonsuz döngü
+        speed={1000} //geçişi yavaşlatıyor
+      >
+        {slides.map((slide) => (
+          <SwiperSlide key={slide.id} className="relative">
+            <img
+              className="w-full h-full object-cover"
+              src={slide.image}
+              alt={slide.title}
+            />
+            <div className="absolute top-50 left-0 text-white flex flex-col gap-8 items-center text-center px-12 md:left-20 max-w-2xl">
+              <h5>{slide.season}</h5>
+              <h1 className="font-bold text-5xl">{slide.title}</h1>
+              <p>{slide.description}</p>
+              <button className="bg-[#2DC071] text-center py-3 px-8 font-bold text-sm rounded-sm">
+                {slide.buttonText}
+              </button>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </>
   );
 }
