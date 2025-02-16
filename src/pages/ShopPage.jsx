@@ -157,6 +157,14 @@ export default function ShopPage() {
             <p className="text-[#737373] text-xl">
               Problems trying to resolve the conflict between the two major
             </p>
+    <div className="container mx-auto px-4">
+      <div className="page-breadcrumb flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-8 px-6 py-10 lg:mx-35">
+        <h3 className="text-[#252B42] text-2xl font-bold">Shop</h3>
+        <p className="flex items-center text-[#BDBDBD]">
+          <span className="text-[#252B42]">Home</span>
+          <ChevronRight size={16} strokeWidth={1} /> Shop{" "}
+        </p>
+      </div>
           </div>
           <div className="flex md:flex-row flex-col items-center justify-center gap-8">
             {products.map((product) => (
