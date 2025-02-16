@@ -165,6 +165,22 @@ export default function ShopPage() {
           <ChevronRight size={16} strokeWidth={1} /> Shop{" "}
         </p>
       </div>
+      <div className="shopping-cards px-4 lg:mx-35">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 place-items-center">
+          {categories.map((category, index) => (
+            <div
+              key={index}
+              className="max-w-sm aspect-[1/1] lg:aspect-[3/4] my-8"
+            >
+              <CategoryCard
+                image={category.image}
+                title={category.title}
+                itemCount={category.itemCount}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
           </div>
           <div className="flex md:flex-row flex-col items-center justify-center gap-8">
             {products.map((product) => (
