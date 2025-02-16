@@ -5,6 +5,79 @@ import NewsCard from "../components/NewsCard";
 
 export default function HomePage() {
   const shopCardsData = [1, 2, 3, 4]; // Dummy data for ShopCard components
+  const products = [
+    {
+      id: 1,
+      title: "Graphic Design",
+      department: "English Department",
+      originalPrice: 16.48,
+      salePrice: 6.48,
+      image: "https://picsum.photos/200/300",
+      colors: ["#3B82F6", "#F97316", "#6B7280", "#1F2937"],
+    },
+    {
+      id: 2,
+      title: "Web Development",
+      department: "Computer Science",
+      originalPrice: 24.99,
+      salePrice: 12.99,
+      image: "https://picsum.photos/200/300",
+      colors: ["#3B82F6", "#F97316", "#6B7280", "#1F2937"],
+    },
+    {
+      id: 3,
+      title: "Digital Marketing",
+      department: "Business Department",
+      originalPrice: 19.99,
+      salePrice: 9.99,
+      image: "https://picsum.photos/200/300",
+      colors: ["#3B82F6", "#F97316", "#6B7280", "#1F2937"],
+    },
+    {
+      id: 4,
+      title: "UI/UX Design",
+      department: "Design Department",
+      originalPrice: 29.99,
+      salePrice: 15.99,
+      image: "https://picsum.photos/200/300",
+      colors: ["#3B82F6", "#F97316", "#6B7280", "#1F2937"],
+    },
+  ];
+  const news = [
+    {
+      isNew: true,
+      image: "https://picsum.photos/200/300",
+      category: "Google",
+      tags: ["Trending", "New"],
+      title: "Loudest à la Madison #1 (L'integral)",
+      description:
+        "We focus on ergonomics and meeting you where you work. It's only a keystroke away.",
+      date: "22 April 2021",
+      comments: 10,
+    },
+    {
+      isNew: false,
+      image: "https://picsum.photos/200/300",
+      category: "Apple",
+      tags: ["Technology", "Innovation"],
+      title: "Apple Unveils New M1 Chip",
+      description:
+        "Apple's new M1 chip promises significant performance improvements and energy efficiency.",
+      date: "15 March 2022",
+      comments: 25,
+    },
+    {
+      isNew: true,
+      image: "https://picsum.photos/200/300",
+      category: "Microsoft",
+      tags: ["Cloud", "AI"],
+      title: "Microsoft Azure Updates",
+      description:
+        "Microsoft announces new features and updates for its Azure cloud platform.",
+      date: "01 June 2023",
+      comments: 15,
+    },
+  ];
 
   return (
     <div className="">
