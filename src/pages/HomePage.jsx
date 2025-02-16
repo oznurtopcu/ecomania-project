@@ -178,11 +178,14 @@ export default function HomePage() {
             Problems trying to resolve the conflict between the two major
           </p>
         </div>
-        <div className="product-cards m-15 flex flex-col gap-4 items-center ">
-          <NewsCard />
-          <NewsCard />
-          <NewsCard />
-          <NewsCard />
+        <div className="product-cards m-15 flex md:flex-row flex-col gap-4 items-start justify-center">
+          {news.map((newsItem) => (
+            <NewsCard
+              key={newsItem.title}
+              news={newsItem}
+              className="md:w-1/3"
+            />
+          ))}
         </div>
       </div>
     </div>
