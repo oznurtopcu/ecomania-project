@@ -46,7 +46,7 @@ export default function HomePage() {
   const news = [
     {
       isNew: true,
-      image: "https://picsum.photos/200/300",
+      image: "https://picsum.photos/200/200",
       category: "Google",
       tags: ["Trending", "New"],
       title: "Loudest à la Madison #1 (L'integral)",
@@ -82,7 +82,7 @@ export default function HomePage() {
   return (
     <div className="">
       {/* Full width slider */}
-      <div className="w-full">
+      <div className="max-w-[1920px] mx-auto">
         <Slider />
       </div>
 
@@ -147,7 +147,7 @@ export default function HomePage() {
       </div>
 
       {/* Full width slider */}
-      <div className="w-full">
+      <div className="max-w-[1920px] mx-auto">
         <Slider />
       </div>
 
@@ -178,7 +178,7 @@ export default function HomePage() {
               </div>
             </div>
             <img
-              className="aspect-[1/1] object-cover md:w-[40%] my-20"
+              className="aspect-[1/1] object-cover md:w-[45%] my-20"
               src="https://picsum.photos/800/300"
               alt="banner"
             />
@@ -197,7 +197,7 @@ export default function HomePage() {
               Problems trying to resolve the conflict between the two major
             </p>
           </div>
-          <div className="product-cards flex md:flex-row flex-col items-start justify-between gap-4">
+          <div className="product-cards flex md:flex-row flex-col items-stretch justify-between gap-4">
             {news.map((newsItem) => (
               <NewsCard
                 key={newsItem.title}
