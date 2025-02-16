@@ -140,28 +140,31 @@ export default function HomePage() {
       </div>
       <div className="fluid-content">
         <div className="flex flex-col md:flex-row-reverse justify-center items-center gap-6">
-          <div className="text-center m-15 flex flex-col gap-6 items-center">
-            <p className="text-center text-[#BDBDBD] m-12 font-bold">
+          <div className="text-center md:text-left m-15 flex flex-col gap-6 items-center md:items-start">
+            <p className="text-center md:text-left text-[#BDBDBD] m-12 font-bold">
               SUMMER 2020
             </p>
             <h2 className="font-bold text-[#252B42] text-4xl leading-12">
-              Part of the <br /> Neural <br />
+              Part of the <br className="md:hidden" /> Neural{" "}
+              <br className="md:hidden" />
               Universe
             </h2>
-            <p className="text-[#737373] text-xl">
-              We know how large <br /> objects will act, but <br /> things on a
-              small scale.
+            <p className="text-center md:text-left text-[#737373] text-xl">
+              We know how large <br className="md:hidden" /> objects will act,
+              but <br className="md:hidden" /> things on a small scale.
             </p>
-            <button className="bg-sky-500 text-white rounded-sm px-10 py-4 font-bold">
-              BUY NOW
-            </button>
-            <button className="text-sky-500 bg-white rounded-sm px-10 py-4 font-bold border-sky-500 border-1">
-              Learn More
-            </button>
+            <div className="flex flex-col justify-center md:flex-row md:justify-start gap-4">
+              <button className="bg-sky-500 text-white rounded-sm px-10 py-4 font-bold">
+                BUY NOW
+              </button>
+              <button className="text-sky-500 bg-white rounded-sm px-10 py-4 font-bold border-sky-500 border-1">
+                Learn More
+              </button>
+            </div>
           </div>
           <img
-            className="aspect-[1/1] object-cover w-[700px]"
-            src="https://picsum.photos/200/300"
+            className="aspect-[1/1] object-cover md:w-[40%] my-20"
+            src="https://picsum.photos/800/300"
             alt="banner"
           />
         </div>
