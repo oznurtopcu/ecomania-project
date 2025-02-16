@@ -58,10 +58,10 @@ export default function Header() {
           />
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8 text-base">
-            <a href="#" className="text-[#737373] hover:text-[#252B42]">
+            <a href="/" className="text-[#737373] hover:text-[#252B42]">
               Home
             </a>
-            <a href="#" className="text-[#737373] hover:text-[#252B42]">
+            <a href="/shop" className="text-[#737373] hover:text-[#252B42]">
               Shop
             </a>
             <a href="#" className="text-[#737373] hover:text-[#252B42]">

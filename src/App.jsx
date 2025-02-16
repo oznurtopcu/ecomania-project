@@ -6,12 +6,16 @@ import Header from "./layout/Header";
 import PageContent from "./layout/PageContent";
 import HomePage from "./pages/HomePage";
 import { Route, Switch } from "react-router-dom";
+import ShopPage from "./pages/ShopPage";
 
 function App() {
   return (
     <PageContent>
       <Switch>
-        <Route path="/">
+        <Route path="/shop">
+          <ShopPage />
+        </Route>
+        <Route exact path="/">
           <HomePage />
         </Route>
       </Switch>
