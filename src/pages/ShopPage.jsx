@@ -2,6 +2,7 @@ import ShopCard from "../components/ShopCard";
 import Slider from "../components/Slider";
 import ProductCard from "../components/ProductCard";
 import NewsCard from "../components/NewsCard";
+import CategoryCard from "../components/CategoryCard";
 
 export default function ShopPage() {
   const products = [
