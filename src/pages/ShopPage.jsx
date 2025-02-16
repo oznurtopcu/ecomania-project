@@ -142,6 +142,34 @@ export default function ShopPage() {
     },
   ];
 
+  const categories = [
+    {
+      title: "MEN",
+      itemCount: 12,
+      image: "https://picsum.photos/500/600",
+    },
+    {
+      title: "WOMEN",
+      itemCount: 15,
+      image: "https://picsum.photos/500/600",
+    },
+    {
+      title: "ACCESSORIES",
+      itemCount: 8,
+      image: "https://picsum.photos/500/600",
+    },
+    {
+      title: "KIDS",
+      itemCount: 10,
+      image: "https://picsum.photos/500/600",
+    },
+    {
+      title: "SHOES",
+      itemCount: 16,
+      image: "https://picsum.photos/500/600",
+    },
+  ];
+
   const clients = [
     {
       name: "MEN",
