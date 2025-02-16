@@ -206,6 +206,14 @@ export default function ShopPage() {
             </button>
           </div>
         </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 place-items-center">
+          {currentProducts.map((product, index) => (
+            <div key={index} className="w-full flex justify-center my-8">
+              <ProductCard key={product.id} product={product} />
+            </div>
+          ))}
+        </div>
+
       </div>
     </div>
   );
