@@ -5,23 +5,19 @@ export default function ProductCard({ product }) {
     product;
 
   return (
-    <div className="w-64 p-4 bg-white rounded-lg shadow-sm">
+    <div className="w-64 bg-white shadow-sm text-center">
       {/* Product Image */}
       <div className="relative aspect-[3/4] mb-4">
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-full object-cover rounded-lg"
-        />
+        <img src={image} alt={title} className="w-full h-full object-cover " />
       </div>
 
       {/* Product Info */}
-      <div className="space-y-2">
+      <div className="space-y-2 ">
         <h3 className="text-lg font-medium text-gray-900">{title}</h3>
         <p className="text-sm text-gray-600">{department}</p>
 
         {/* Price Section */}
-        <div className="flex items-center space-x-2">
+        <div className="flex justify-center items-center space-x-2 ">
           <span className="text-lg font-bold text-green-600">${salePrice}</span>
           <span className="text-sm text-gray-400 line-through">
             ${originalPrice}
@@ -29,7 +25,7 @@ export default function ProductCard({ product }) {
         </div>
 
         {/* Color Options */}
-        <div className="flex space-x-2 mt-3">
+        <div className="flex justify-center space-x-2 my-3">
           {colors.map((color, index) => (
             <button
               key={index}
