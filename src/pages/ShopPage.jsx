@@ -2,7 +2,10 @@ import ShopCard from "../components/ShopCard";
 import Slider from "../components/Slider";
 import ProductCard from "../components/ProductCard";
 import NewsCard from "../components/NewsCard";
+import { ChevronRight, Grid3x3, List } from "lucide-react";
 import CategoryCard from "../components/CategoryCard";
+import Pagination from "../components/Pagination";
+import { useState } from "react";
 
 export default function ShopPage() {
   const products = [
@@ -194,6 +197,22 @@ export default function ShopPage() {
     },
   ];
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
+
+  // Calculate current products
+  const indexOfLastProduct = currentPage * itemsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <div className="container mx-auto px-4">
       <div className="page-breadcrumb flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-8 px-6 py-10 lg:mx-35">
@@ -252,6 +271,13 @@ export default function ShopPage() {
           ))}
         </div>
 
+        <Pagination
+          totalItems={products.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
+      </div>
       <div className="client-cards px-4 lg:mx-35">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 place-items-center">
           {clients.map((client, index) => (
