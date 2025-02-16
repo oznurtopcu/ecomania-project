@@ -6,7 +6,7 @@ const NewsCard = ({ news }) => {
     news;
 
   return (
-    <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white">
+    <div className="max-w-sm rounded-sm overflow-hidden shadow-lg bg-white">
       {/* Image Container */}
       <div className="relative">
         <img
