@@ -23,7 +23,7 @@ export default function Header() {
     <header>
       {/* Top navy blue header */}
       <div className="bg-[#252B42] text-white">
-        <div className="container mx-auto px-6 py-3 hidden md:flex justify-between items-center">
+        <div className="container mx-auto px-6 py-3 hidden lg:flex justify-between items-center">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <Phone className="w-4 h-4" />
@@ -57,7 +57,7 @@ export default function Header() {
             alt="logo"
           />
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8 text-base">
+          <nav className="hidden lg:flex items-center gap-8 text-base">
             <a href="#" className="text-[#737373] hover:text-[#252B42]">
               Home
             </a>
@@ -79,11 +79,11 @@ export default function Header() {
           </nav>
           {/* Icons */}
           <div className="flex gap-3">
-            <div className="hidden md:flex items-center gap-2 text-[#23A6F0]">
+            <div className="hidden lg:flex items-center gap-2 text-[#23A6F0]">
               <User />
               <span className="text-base">Login / Register</span>
             </div>
-            <div className="hidden md:flex items-center gap-4 text-[#23A6F0]">
+            <div className="hidden lg:flex items-center gap-4 text-[#23A6F0]">
               <Search />
               <div className="flex items-center gap-2">
                 <ShoppingCart />
@@ -95,14 +95,14 @@ export default function Header() {
               </div>
             </div>
             {/* Mobile Menu Button - Only visible on mobile */}
-            <button className="md:hidden" onClick={toggleMenu}>
+            <button className="lg:hidden" onClick={toggleMenu}>
               {isClicked ? <X /> : <Menu />}
             </button>
           </div>
         </div>
         {/* Mobile Navigation Menu - Only visible on mobile */}
         <div
-          className={`md:hidden transition-all duration-300 ease-in-out transform ${
+          className={`lg:hidden transition-all duration-300 ease-in-out transform ${
             isClicked
               ? "translate-y-0 opacity-100 max-h-[500px]"
               : "-translate-y-10 opacity-0 max-h-0"
