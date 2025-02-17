@@ -16,17 +16,18 @@ export default function SignupPage() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      role_id: "2", // Default to Customer role
+      role_id: "3", // Default to Customer role
     },
   });
 
   const selectedRole = watch("role_id");
+  console.log(selectedRole);
 
   // Fetch roles
   useEffect(() => {
     api
       .get("/roles")
-      .then((res) => setRoles(res.data))
+      .then((res) => setRoles(res.data.reverse()))
       .catch((err) => setError(err.message));
   }, []);
 
@@ -36,7 +37,7 @@ export default function SignupPage() {
 
     try {
       const formData =
-        selectedRole === "3"
+        selectedRole === "2"
           ? {
               name: data.name,
               email: data.email,
@@ -182,7 +183,7 @@ export default function SignupPage() {
           </div>
 
           {/* Store Fields (Conditional) */}
-          {selectedRole === "3" && (
+          {selectedRole === "2" && (
             <div className="space-y-4">
               <div>
                 <label className="block mb-2">Store Name</label>
