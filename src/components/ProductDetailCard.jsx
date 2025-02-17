@@ -22,9 +22,9 @@ export default function ProductDetailCard() {
       { id: 4, name: "Navy", code: "#2D3047" },
     ],
     images: [
-      "https://picsum.photos/250/300",
-      "https://picsum.photos/250/300",
-      "https://picsum.photos/250/300",
+      "https://picsum.photos/350/350",
+      "https://picsum.photos/350/300",
+      "https://picsum.photos/450/300",
     ],
     rating: 4,
     reviewCount: 10,
