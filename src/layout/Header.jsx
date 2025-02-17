@@ -18,6 +18,7 @@ export default function Header() {
   const [isClicked, setIsClicked] = useState(false);
   const toggleMenu = () => {
     setIsClicked(!isClicked);
+    //comment2
   };
   return (
     <header>
