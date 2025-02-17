@@ -6,6 +6,7 @@ import { api } from "../api/axios";
 export default function SignupPage() {
   const [roles, setRoles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isRolesLoading, setIsRolesLoading] = useState(true);
   const [error, setError] = useState(null);
   const history = useHistory();
 
@@ -13,6 +14,7 @@ export default function SignupPage() {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -21,14 +23,24 @@ export default function SignupPage() {
   });
 
   const selectedRole = watch("role_id");
-  console.log(selectedRole);
 
-  // Fetch roles
+  // Fetch roles with proper error handling
   useEffect(() => {
-    api
-      .get("/roles")
-      .then((res) => setRoles(res.data.reverse()))
-      .catch((err) => setError(err.message));
+    const fetchRoles = async () => {
+      try {
+        setIsRolesLoading(true);
+        const response = await api.get("/roles");
+        if (response.data) {
+          setRoles(response.data.reverse());
+        }
+      } catch (err) {
+        setError("Failed to load roles. Please try again later.");
+      } finally {
+        setIsRolesLoading(false);
+      }
+    };
+
+    fetchRoles();
   }, []);
 
   const onSubmit = async (data) => {
@@ -39,33 +51,48 @@ export default function SignupPage() {
       const formData =
         selectedRole === "2"
           ? {
-              name: data.name,
-              email: data.email,
+              name: data.name.trim(),
+              email: data.email.toLowerCase().trim(),
               password: data.password,
               role_id: data.role_id,
               store: {
-                name: data.storeName,
-                phone: data.storePhone,
-                tax_no: data.taxNo,
-                bank_account: data.bankAccount,
+                name: data.storeName.trim(),
+                phone: data.storePhone.trim(),
+                tax_no: data.taxNo.trim().toUpperCase(),
+                bank_account: data.bankAccount.trim().toUpperCase(),
               },
             }
           : {
-              name: data.name,
-              email: data.email,
+              name: data.name.trim(),
+              email: data.email.toLowerCase().trim(),
               password: data.password,
               role_id: data.role_id,
             };
 
-      await api.post("/signup", formData);
-      alert("You need to click link in email to activate your account!");
-      history.goBack();
+      const response = await api.post("/signup", formData);
+
+      if (response.data) {
+        alert("Please check your email to activate your account!");
+        reset(); // Clear form
+        history.push("/"); // Redirect to home instead of going back
+      }
     } catch (err) {
-      setError(err.response?.data?.message || "An error occurred");
+      setError(
+        err.response?.data?.message ||
+          "Registration failed. Please try again later."
+      );
     } finally {
       setIsLoading(false);
     }
   };
+
+  if (isRolesLoading) {
+    return (
+      <div className="container mx-auto px-4 py-8 flex justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500" />
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -73,35 +100,57 @@ export default function SignupPage() {
         <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
 
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          <div
+            role="alert"
+            className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"
+          >
             {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-4"
+          noValidate
+        >
           {/* Name Field */}
           <div>
-            <label className="block mb-2">Name</label>
+            <label htmlFor="name" className="block mb-2">
+              Name
+            </label>
             <input
+              id="name"
+              type="text"
+              aria-invalid={errors.name ? "true" : "false"}
               {...register("name", {
                 required: "Name is required",
                 minLength: {
                   value: 3,
                   message: "Name must be at least 3 characters",
                 },
+                maxLength: {
+                  value: 50,
+                  message: "Name must be less than 50 characters",
+                },
               })}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.name && (
-              <p className="text-red-500 text-sm">{errors.name.message}</p>
+              <p role="alert" className="text-red-500 text-sm mt-1">
+                {errors.name.message}
+              </p>
             )}
           </div>
 
           {/* Email Field */}
           <div>
-            <label className="block mb-2">Email</label>
+            <label htmlFor="email" className="block mb-2">
+              Email
+            </label>
             <input
+              id="email"
               type="email"
+              aria-invalid={errors.email ? "true" : "false"}
               {...register("email", {
                 required: "Email is required",
                 pattern: {
@@ -109,10 +158,12 @@ export default function SignupPage() {
                   message: "Invalid email address",
                 },
               })}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.email && (
-              <p className="text-red-500 text-sm">{errors.email.message}</p>
+              <p role="alert" className="text-red-500 text-sm mt-1">
+                {errors.email.message}
+              </p>
             )}
           </div>
 
@@ -267,7 +318,8 @@ export default function SignupPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 disabled:bg-blue-300"
+            aria-busy={isLoading}
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 disabled:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
             {isLoading ? (
               <span className="flex items-center justify-center">
