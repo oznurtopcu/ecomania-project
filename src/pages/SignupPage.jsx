@@ -3,8 +3,6 @@ export default function SignupPage() {
     <>
       <p>Signup Page</p>
       <p>Signup Page</p>
-      <p>Signup Page</p>
-      <p>Signup Page</p>
     </>
   );
 }
