@@ -129,6 +129,19 @@ export default function ProductDetailPage() {
           ))}
         </div>
       </div>
+      <div className="client-cards px-4 lg:mx-35">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 place-items-center">
+          {clients.map((client, index) => (
+            <div key={index} className=" my-8">
+              <img
+                className="grayscale hover:grayscale-0 w-48"
+                src={client.image}
+                alt={client.name}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
