@@ -1,3 +1,8 @@
+import { useHistory } from "react-router-dom";
+import ProductCard from "../components/ProductCard";
+import { ChevronRight } from "lucide-react";
+import ProductDetailCard from "../components/ProductDetailCard";
+
 export default function ProductDetailPage() {
   return <p>Product Detail Page!</p>;
   let history = useHistory();
@@ -98,4 +103,9 @@ export default function ProductDetailPage() {
       image: "https://img.logoipsum.com/354.svg",
     },
   ];
+
+  return (
+    <div className="container mx-auto my-8">
+    </div>
+  );
 }
