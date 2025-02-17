@@ -112,6 +112,9 @@ export default function ProductDetailPage() {
           <ChevronRight size={16} strokeWidth={1} /> Shop{" "}
         </p>
       </div>
+      <div className="product-detail">
+        <ProductDetailCard />
+      </div>
     </div>
   );
 }
