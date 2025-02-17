@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import { Route, Switch } from "react-router-dom";
 import ShopPage from "./pages/ShopPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import SignupPage from "./pages/SignupPage";
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
         </Route>
         <Route path="/shop">
           <ShopPage />
+        </Route>
+        <Route path="/signup">
+          <SignupPage />
         </Route>
       </Switch>
     </PageContent>
