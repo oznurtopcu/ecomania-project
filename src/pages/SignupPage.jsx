@@ -97,7 +97,9 @@ export default function SignupPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center text-[#252B42]">
+          Sign Up
+        </h2>
 
         {error && (
           <div
@@ -115,7 +117,7 @@ export default function SignupPage() {
         >
           {/* Name Field */}
           <div>
-            <label htmlFor="name" className="block mb-2">
+            <label htmlFor="name" className="block mb-2 text-[#737373]">
               Name
             </label>
             <input
@@ -133,7 +135,7 @@ export default function SignupPage() {
                   message: "Name must be less than 50 characters",
                 },
               })}
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border border-[#E6E6E6] rounded text-[#737373] focus:outline-none focus:ring-2 focus:ring-[#23A6F0]"
             />
             {errors.name && (
               <p role="alert" className="text-red-500 text-sm mt-1">
@@ -144,7 +146,7 @@ export default function SignupPage() {
 
           {/* Email Field */}
           <div>
-            <label htmlFor="email" className="block mb-2">
+            <label htmlFor="email" className="block mb-2 text-[#737373]">
               Email
             </label>
             <input
@@ -158,7 +160,7 @@ export default function SignupPage() {
                   message: "Invalid email address",
                 },
               })}
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border border-[#E6E6E6] rounded text-[#737373] focus:outline-none focus:ring-2 focus:ring-[#23A6F0]"
             />
             {errors.email && (
               <p role="alert" className="text-red-500 text-sm mt-1">
@@ -169,7 +171,7 @@ export default function SignupPage() {
 
           {/* Password Field */}
           <div>
-            <label className="block mb-2">Password</label>
+            <label className="block mb-2 text-[#737373]">Password</label>
             <input
               type="password"
               {...register("password", {
@@ -193,7 +195,7 @@ export default function SignupPage() {
                     "Password must contain at least one special character",
                 },
               })}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border border-[#E6E6E6] rounded text-[#737373] focus:outline-none focus:ring-2 focus:ring-[#23A6F0]"
             />
             {errors.password && (
               <p className="text-red-500 text-sm">{errors.password.message}</p>
@@ -202,14 +204,16 @@ export default function SignupPage() {
 
           {/* Confirm Password Field */}
           <div>
-            <label className="block mb-2">Confirm Password</label>
+            <label className="block mb-2 text-[#737373]">
+              Confirm Password
+            </label>
             <input
               type="password"
               {...register("confirmPassword", {
                 validate: (value) =>
                   value === watch("password") || "Passwords do not match",
               })}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border border-[#E6E6E6] rounded text-[#737373] focus:outline-none focus:ring-2 focus:ring-[#23A6F0]"
             />
             {errors.confirmPassword && (
               <p className="text-red-500 text-sm">
@@ -220,10 +224,10 @@ export default function SignupPage() {
 
           {/* Role Selection */}
           <div>
-            <label className="block mb-2">Role</label>
+            <label className="block mb-2 text-[#737373]">Role</label>
             <select
               {...register("role_id")}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border border-[#E6E6E6] rounded text-[#737373] focus:outline-none focus:ring-2 focus:ring-[#23A6F0]"
             >
               {roles.map((role) => (
                 <option key={role.id} value={role.id}>
@@ -237,7 +241,7 @@ export default function SignupPage() {
           {selectedRole === "2" && (
             <div className="space-y-4">
               <div>
-                <label className="block mb-2">Store Name</label>
+                <label className="block mb-2 text-[#737373]">Store Name</label>
                 <input
                   {...register("storeName", {
                     required: "Store name is required",
@@ -246,7 +250,7 @@ export default function SignupPage() {
                       message: "Store name must be at least 3 characters",
                     },
                   })}
-                  className="w-full p-2 border rounded"
+                  className="w-full p-2 border border-[#E6E6E6] rounded text-[#737373] focus:outline-none focus:ring-2 focus:ring-[#23A6F0]"
                 />
                 {errors.storeName && (
                   <p className="text-red-500 text-sm">
@@ -256,7 +260,7 @@ export default function SignupPage() {
               </div>
 
               <div>
-                <label className="block mb-2">Store Phone</label>
+                <label className="block mb-2 text-[#737373]">Store Phone</label>
                 <input
                   {...register("storePhone", {
                     required: "Store phone is required",
@@ -265,7 +269,7 @@ export default function SignupPage() {
                       message: "Invalid Turkish phone number",
                     },
                   })}
-                  className="w-full p-2 border rounded"
+                  className="w-full p-2 border border-[#E6E6E6] rounded text-[#737373] focus:outline-none focus:ring-2 focus:ring-[#23A6F0]"
                   placeholder="+90..."
                 />
                 {errors.storePhone && (
@@ -276,7 +280,7 @@ export default function SignupPage() {
               </div>
 
               <div>
-                <label className="block mb-2">Tax ID</label>
+                <label className="block mb-2 text-[#737373]">Tax ID</label>
                 <input
                   {...register("taxNo", {
                     required: "Tax ID is required",
@@ -285,7 +289,7 @@ export default function SignupPage() {
                       message: "Invalid Tax ID format (TXXXVXXXXXX)",
                     },
                   })}
-                  className="w-full p-2 border rounded"
+                  className="w-full p-2 border border-[#E6E6E6] rounded text-[#737373] focus:outline-none focus:ring-2 focus:ring-[#23A6F0]"
                   placeholder="TXXXVXXXXXX"
                 />
                 {errors.taxNo && (
@@ -294,7 +298,9 @@ export default function SignupPage() {
               </div>
 
               <div>
-                <label className="block mb-2">Bank Account (IBAN)</label>
+                <label className="block mb-2 text-[#737373]">
+                  Bank Account (IBAN)
+                </label>
                 <input
                   {...register("bankAccount", {
                     required: "IBAN is required",
@@ -303,7 +309,7 @@ export default function SignupPage() {
                       message: "Invalid IBAN format",
                     },
                   })}
-                  className="w-full p-2 border rounded"
+                  className="w-full p-2 border border-[#E6E6E6] rounded text-[#737373] focus:outline-none focus:ring-2 focus:ring-[#23A6F0]"
                   placeholder="TR..."
                 />
                 {errors.bankAccount && (
@@ -319,7 +325,7 @@ export default function SignupPage() {
             type="submit"
             disabled={isLoading}
             aria-busy={isLoading}
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 disabled:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="w-full bg-[#23A6F0] text-white py-2 px-4 rounded hover:bg-[#1a8fd4] disabled:bg-[#23A6F0]/50 focus:outline-none focus:ring-2 focus:ring-[#23A6F0] focus:ring-offset-2"
           >
             {isLoading ? (
               <span className="flex items-center justify-center">
