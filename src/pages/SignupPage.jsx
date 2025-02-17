@@ -12,11 +12,12 @@ export default function SignupPage() {
 
   const {
     register,
-    handleSubmit,
-    watch,
-    reset,
-    formState: { errors },
+    handleSubmit, //submit fn
+    watch, //input watcher
+    reset, //reset form
+    formState: { errors, isValid },
   } = useForm({
+    mode: "onBlur",
     defaultValues: {
       role_id: "3", // Default to Customer role
     },
@@ -272,10 +273,10 @@ export default function SignupPage() {
                       <input
                         {...register("storePhone", {
                           required: "Store phone is required",
-                          pattern: {
-                            value: /^(\+90|0)?[0-9]{10}$/,
-                            message: "Invalid Turkish phone number",
-                          },
+                          // pattern: {
+                          //   value: /^(\+90|0)?[0-9]{10}$/,
+                          //   message: "Invalid Turkish phone number",
+                          // },
                         })}
                         className="w-full p-3 border border-[#E6E6E6] rounded-lg text-[#737373]"
                         placeholder="+90 XXX XXX XX XX"
@@ -338,7 +339,7 @@ export default function SignupPage() {
 
               <button
                 type="submit"
-                disabled={isLoading}
+                disabled={isLoading || !isValid}
                 className="w-full bg-[#23A6F0] text-white py-3 px-6 rounded-lg font-medium hover:bg-[#1a8fd4] disabled:bg-[#23A6F0]/50"
               >
                 {isLoading ? "Creating account..." : "Create Account"}
