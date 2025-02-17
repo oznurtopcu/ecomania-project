@@ -114,7 +114,93 @@ export default function ProductDetailPage() {
       <div className="product-detail">
         <ProductDetailCard />
       </div>
-      <div className="product-description"></div>
+      <div className="product-description px-4 lg:mx-35 my-20">
+        {/* Description Header */}
+        <div className="flex justify-center p-4 gap-4 md:gap-8 font-bold text-[#737373] whitespace-nowrap">
+          <p className="underline">Description</p>
+          <p>Additional Information</p>
+          <p>
+            Reviews <span className="text-[#23856D]">{"(0)"}</span>
+          </p>
+        </div>
+
+        {/* Description Content */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+          {/* Image Column */}
+          <div className="w-full h-full">
+            <img
+              src="https://picsum.photos/400/400"
+              alt="Product Description"
+              className="w-full h-full object-cover rounded-md shadow-2xl"
+            />
+          </div>
+
+          {/* Text Column */}
+          <div className="flex flex-col gap-4">
+            <h4 className="text-xl font-bold text-[#252B42]">
+              the quick fox jumps over
+            </h4>
+            <p className="text-[#737373]">
+              Met minim Mollie non desert Alamo est sit cliquey dolor do met
+              sent. RELIT official consequent door ENIM RELIT Mollie. Excitation
+              venial consequent sent nostrum met.
+            </p>
+            <p className="text-[#737373]">
+              Met minim Mollie non desert Alamo est sit cliquey dolor do met
+              sent. RELIT official consequent door ENIM RELIT Mollie. Excitation
+              venial consequent sent nostrum met.
+            </p>
+            <p className="text-[#737373]">
+              Met minim Mollie non desert Alamo est sit cliquey dolor do met
+              sent. RELIT official consequent door ENIM RELIT Mollie. Excitation
+              venial consequent sent nostrum met.
+            </p>
+          </div>
+
+          {/* List Column */}
+          <div className="flex flex-col gap-4">
+            <h4 className="text-xl font-bold text-[#252B42]">
+              the quick fox jumps over
+            </h4>
+            <div className="flex flex-col gap-2">
+              <p className="text-[#737373] flex items-center gap-2">
+                <ChevronRight className="text-[#23A6F0]" size={16} /> The quick
+                fox jumps over the lazy dog
+              </p>
+              <p className="text-[#737373] flex items-center gap-2">
+                <ChevronRight className="text-[#23A6F0]" size={16} /> The quick
+                fox jumps over the lazy dog
+              </p>
+              <p className="text-[#737373] flex items-center gap-2">
+                <ChevronRight className="text-[#23A6F0]" size={16} /> The quick
+                fox jumps over the lazy dog
+              </p>
+              <p className="text-[#737373] flex items-center gap-2">
+                <ChevronRight className="text-[#23A6F0]" size={16} /> The quick
+                fox jumps over the lazy dog
+              </p>
+            </div>
+
+            <h4 className="text-xl font-bold text-[#252B42] mt-4">
+              the quick fox jumps over
+            </h4>
+            <div className="flex flex-col gap-2">
+              <p className="text-[#737373] flex items-center gap-2">
+                <ChevronRight className="text-[#23A6F0]" size={16} /> The quick
+                fox jumps over the lazy dog
+              </p>
+              <p className="text-[#737373] flex items-center gap-2">
+                <ChevronRight className="text-[#23A6F0]" size={16} /> The quick
+                fox jumps over the lazy dog
+              </p>
+              <p className="text-[#737373] flex items-center gap-2">
+                <ChevronRight className="text-[#23A6F0]" size={16} /> The quick
+                fox jumps over the lazy dog
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="bestseller-cards px-4 lg:mx-35">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 place-items-center">
           {products.map((product, index) => (
