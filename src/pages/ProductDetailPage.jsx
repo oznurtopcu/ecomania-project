@@ -106,6 +106,12 @@ export default function ProductDetailPage() {
 
   return (
     <div className="container mx-auto my-8">
+      <div className="page-breadcrumb flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-8 px-6 py-10 lg:mx-35">
+        <p className="flex items-center text-[#BDBDBD]">
+          <span className="text-[#252B42]">Home</span>
+          <ChevronRight size={16} strokeWidth={1} /> Shop{" "}
+        </p>
+      </div>
     </div>
   );
 }
