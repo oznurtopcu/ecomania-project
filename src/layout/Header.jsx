@@ -82,7 +82,9 @@ export default function Header() {
           <div className="flex gap-3">
             <div className="hidden lg:flex items-center gap-2 text-[#23A6F0]">
               <User />
-              <span className="text-base">Login / Register</span>
+              <a href="/signup">
+                <span className="text-base">Login / Register</span>
+              </a>
             </div>
             <div className="hidden lg:flex items-center gap-4 text-[#23A6F0]">
               <Search />
