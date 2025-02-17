@@ -4,7 +4,6 @@ import { ChevronRight } from "lucide-react";
 import ProductDetailCard from "../components/ProductDetailCard";
 
 export default function ProductDetailPage() {
-  return <p>Product Detail Page!</p>;
   let history = useHistory();
   const products = [
     {
@@ -115,6 +114,7 @@ export default function ProductDetailPage() {
       <div className="product-detail">
         <ProductDetailCard />
       </div>
+      <div className="product-description"></div>
       <div className="bestseller-cards px-4 lg:mx-35">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 place-items-center">
           {products.map((product, index) => (
