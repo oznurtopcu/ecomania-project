@@ -236,6 +236,28 @@ export default function SignupPage() {
                   )}
                 </div>
 
+                {/*Password Confirm*/}
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-[#737373]">
+                    Confirm Password
+                  </label>
+                  <input
+                    type="password"
+                    {...register("passwordConfirm", {
+                      required: "Password is required",
+                      validate: (value) =>
+                        value === watch("password") || "Passwords do not match",
+                    })}
+                    className="w-full p-3 border border-[#E6E6E6] rounded-lg text-[#737373]"
+                    placeholder="Confirm your password"
+                  />
+                  {errors.passwordConfirm && (
+                    <p className="mt-2 text-sm text-red-600">
+                      {errors.passwordConfirm.message}
+                    </p>
+                  )}
+                </div>
+
                 {/* Role Selection */}
                 <div>
                   <label className="block mb-2 text-sm font-medium text-[#737373]">
