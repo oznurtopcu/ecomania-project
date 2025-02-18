@@ -211,6 +211,20 @@ export default function SignupPage() {
                         value: 8,
                         message: "Password must be at least 8 characters",
                       },
+                      validate: {
+                        hasUpperCase: (value) =>
+                          /[A-Z]/.test(value) ||
+                          "Password must contain at least one uppercase letter",
+                        hasLowerCase: (value) =>
+                          /[a-z]/.test(value) ||
+                          "Password must contain at least one lowercase letter",
+                        hasNumber: (value) =>
+                          /[0-9]/.test(value) ||
+                          "Password must contain at least one number",
+                        hasSpecialChar: (value) =>
+                          /[!@#$%^&*(),.?":{}|<>]/.test(value) ||
+                          "Password must contain at least one special character",
+                      },
                     })}
                     className="w-full p-3 border border-[#E6E6E6] rounded-lg text-[#737373]"
                     placeholder="Enter your password"
