@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { api } from "../api/axios";
+import { toast } from "react-toastify";
 
 export default function SignupPage() {
   const [roles, setRoles] = useState([]);
@@ -73,9 +74,9 @@ export default function SignupPage() {
       const response = await api.post("/signup", formData);
 
       if (response.data) {
-        alert("Please check your email to activate your account!");
+        toast.success("Please check your email to activate your account!");
         reset(); // Clear form
-        history.push("/"); // Redirect to home instead of going back
+        history.push("/login"); // Redirect to home instead of going back
       }
     } catch (err) {
       setError(
@@ -138,13 +139,14 @@ export default function SignupPage() {
               Create Account
             </h2>
 
-            {error && (
+            {/* {error && (
               //registration fail mesajı
               <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6 rounded-r-xl text-red-700">
                 <p className="font-medium">Oops!</p>
                 <p className="text-sm">{error}</p>
               </div>
-            )}
+            )} */}
+            {error && toast.error(error)}
 
             <form
               onSubmit={handleSubmit(onSubmit)}

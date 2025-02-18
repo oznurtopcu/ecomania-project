@@ -1,3 +1,4 @@
+import { ToastContainer } from "react-toastify";
 import Footer from "./Footer";
 import Header from "./Header";
 
@@ -9,6 +10,18 @@ export default function PageContent({ children }) {
       <Header />
       <main className="mx-auto font-montserrat"> {children} </main>
       <Footer />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={true}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 }
