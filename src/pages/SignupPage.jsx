@@ -96,6 +96,10 @@ export default function SignupPage() {
     );
   }
 
+  {
+    error && toast.error(error);
+  }
+
   return (
     <div className="container mx-auto px-4 py-12 min-h-screen flex items-center">
       <div className="flex flex-col lg:flex-row gap-12 items-stretch max-w-7xl mx-auto w-full">
@@ -146,7 +150,6 @@ export default function SignupPage() {
                 <p className="text-sm">{error}</p>
               </div>
             )} */}
-            {error && toast.error(error)}
 
             <form
               onSubmit={handleSubmit(onSubmit)}
