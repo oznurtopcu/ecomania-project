@@ -1,3 +1,6 @@
+import axios from "axios";
+import { api } from "../../api/axios";
+
 // Action Types
 export const SET_USER = "SET_USER";
 export const SET_ROLES = "SET_ROLES";
@@ -24,3 +27,17 @@ export const setLanguage = (language) => ({
   type: SET_LANGUAGE,
   payload: language,
 });
+
+export const fetchRoles = () => async (dispatch, getState) => {
+  const { client } = getState();
+  if (client.roles.length === 0) {
+    await api
+      .get("/roles")
+      .then((response) => {
+        dispatch(setRoles(response.data));
+      })
+      .catch((error) => {
+        console.log("Failed to fetch roles:", error);
+      });
+  }
+};
