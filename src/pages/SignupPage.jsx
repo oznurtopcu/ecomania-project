@@ -3,11 +3,16 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { api } from "../api/axios";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchRoles } from "../store/actions/clientActions";
 
 export default function SignupPage() {
-  const [roles, setRoles] = useState([]);
+  //const [roles, setRoles] = useState([]);
+  const { roles, rolesLoading, rolesError } = useSelector(
+    (state) => state.client
+  );
   const [isLoading, setIsLoading] = useState(false);
-  const [isRolesLoading, setIsRolesLoading] = useState(true);
+  //const [isRolesLoading, setIsRolesLoading] = useState(false);
   const [error, setError] = useState(null);
   const history = useHistory();
 
@@ -27,23 +32,29 @@ export default function SignupPage() {
   const selectedRole = watch("role_id");
 
   // Fetch roles with proper error handling
-  useEffect(() => {
-    const fetchRoles = async () => {
-      try {
-        setIsRolesLoading(true);
-        const response = await api.get("/roles");
-        if (response.data) {
-          setRoles(response.data.reverse());
-        }
-      } catch (err) {
-        setError("Failed to load roles. Please try again later.");
-      } finally {
-        setIsRolesLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchRoles = async () => {
+  //     try {
+  //       setIsRolesLoading(true);
+  //       const response = await api.get("/roles");
+  //       if (response.data) {
+  //         setRoles(response.data.reverse());
+  //       }
+  //     } catch (err) {
+  //       setError("Failed to load roles. Please try again later.");
+  //     } finally {
+  //       setIsRolesLoading(false);
+  //     }
+  //   };
 
-    fetchRoles();
-  }, []);
+  //   fetchRoles();
+  // }, []);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchRoles());
+  }, [dispatch]);
 
   const onSubmit = async (data) => {
     setIsLoading(true);
@@ -88,12 +99,25 @@ export default function SignupPage() {
     }
   };
 
-  if (isRolesLoading) {
+  // if (isRolesLoading) {
+  //   //spinner
+  //   return (
+  //     <div className="container mx-auto px-4 py-8 flex justify-center">
+  //       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500" />
+  //     </div>
+  //   );
+  // }
+
+  if (rolesLoading) {
     return (
       <div className="container mx-auto px-4 py-8 flex justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500" />
       </div>
     );
+  }
+
+  if (rolesError) {
+    return toast.error("Roller yüklenemedi!");
   }
 
   {
