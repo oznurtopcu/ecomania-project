@@ -13,13 +13,12 @@ import {
   Youtube,
 } from "lucide-react";
 import { useState } from "react";
+import UserMenu from "../components/UserMenu";
 
 export default function Header() {
   const [isClicked, setIsClicked] = useState(false);
   const toggleMenu = () => {
     setIsClicked(!isClicked);
-    //comment2
-    //comment3
   };
   return (
     <header>
@@ -79,6 +78,9 @@ export default function Header() {
               Pages
             </a>
           </nav>
+          <div className="flex items-center">
+            <UserMenu />
+          </div>
           {/* Icons */}
           <div className="flex gap-3">
             <div className="hidden lg:flex items-center gap-2 text-[#23A6F0]">

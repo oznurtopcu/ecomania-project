@@ -4,15 +4,16 @@ import { useHistory } from "react-router-dom";
 import { api } from "../api/axios";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchRoles } from "../store/actions/clientActions";
+import { fetchRoles } from "../store/actions/roleActions"; // clientActions yerine roleActions'dan import edelim
 
 export default function SignupPage() {
-  //const [roles, setRoles] = useState([]);
-  const { roles, rolesLoading, rolesError } = useSelector(
-    (state) => state.client
-  );
+  // state.client yerine state.roles'dan verileri alalım
+  const {
+    roles,
+    loading: rolesLoading,
+    error: rolesError,
+  } = useSelector((state) => state.roles);
   const [isLoading, setIsLoading] = useState(false);
-  //const [isRolesLoading, setIsRolesLoading] = useState(false);
   const [error, setError] = useState(null);
   const history = useHistory();
 
@@ -30,25 +31,6 @@ export default function SignupPage() {
   });
 
   const selectedRole = watch("role_id");
-
-  // Fetch roles with proper error handling
-  // useEffect(() => {
-  //   const fetchRoles = async () => {
-  //     try {
-  //       setIsRolesLoading(true);
-  //       const response = await api.get("/roles");
-  //       if (response.data) {
-  //         setRoles(response.data.reverse());
-  //       }
-  //     } catch (err) {
-  //       setError("Failed to load roles. Please try again later.");
-  //     } finally {
-  //       setIsRolesLoading(false);
-  //     }
-  //   };
-
-  //   fetchRoles();
-  // }, []);
 
   const dispatch = useDispatch();
 
@@ -98,15 +80,6 @@ export default function SignupPage() {
       setIsLoading(false);
     }
   };
-
-  // if (isRolesLoading) {
-  //   //spinner
-  //   return (
-  //     <div className="container mx-auto px-4 py-8 flex justify-center">
-  //       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500" />
-  //     </div>
-  //   );
-  // }
 
   if (rolesLoading) {
     return (
@@ -166,14 +139,6 @@ export default function SignupPage() {
             <h2 className="text-3xl font-bold mb-8 text-center text-[#252B42]">
               Create Account
             </h2>
-
-            {/* {error && (
-              //registration fail mesajı
-              <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6 rounded-r-xl text-red-700">
-                <p className="font-medium">Oops!</p>
-                <p className="text-sm">{error}</p>
-              </div>
-            )} */}
 
             <form
               onSubmit={handleSubmit(onSubmit)}

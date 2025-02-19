@@ -5,6 +5,7 @@ import { Route, Switch } from "react-router-dom";
 import ShopPage from "./pages/ShopPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import SignupPage from "./pages/SignupPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
         </Route>
         <Route path="/signup">
           <SignupPage />
+        </Route>
+        <Route path="/login">
+          <LoginPage />
         </Route>
       </Switch>
     </PageContent>
