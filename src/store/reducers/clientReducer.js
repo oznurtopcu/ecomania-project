@@ -1,8 +1,6 @@
 import {
   SET_USER,
   SET_ROLES,
-  SET_ROLES_LOADING,
-  SET_ROLES_ERROR,
   SET_THEME,
   SET_LANGUAGE,
 } from "../actions/clientActions";
@@ -13,8 +11,6 @@ const initialState = {
   addressList: [],
   creditCards: [],
   roles: [],
-  rolesLoading: false,
-  rolesError: null,
   theme: "light",
   language: "en",
 };
@@ -30,16 +26,6 @@ const clientReducer = (state = initialState, action) => {
       return {
         ...state,
         roles: action.payload,
-      };
-    case SET_ROLES_LOADING:
-      return {
-        ...state,
-        rolesLoading: action.payload,
-      };
-    case SET_ROLES_ERROR:
-      return {
-        ...state,
-        rolesError: action.payload,
       };
     case SET_THEME:
       return {
