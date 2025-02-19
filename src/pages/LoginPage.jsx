@@ -21,7 +21,13 @@ export default function LoginPage() {
     try {
       await dispatch(loginUser(data));
       toast.success("Successfully logged in!");
-      history.push("/");
+
+      //ilk sayfa ve mevcut sayfa da history'de olduğu için 2'den büyükse bir önceki sayfaya git
+      if (history.length > 2) {
+        history.goBack();
+      } else {
+        history.push("/");
+      }
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed!");
     }
