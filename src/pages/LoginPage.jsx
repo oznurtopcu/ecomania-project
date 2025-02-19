@@ -24,14 +24,14 @@ export default function LoginPage() {
 
       //NOT1: ilk sayfa ve mevcut sayfa da history'de olduğu için 2'den büyükse bir önceki sayfaya git
       //NOT2: history.goBack fonksyionu sayfayı yenilediği için kullanıcını header'da kalamıyor.
-      if (history.length > 2) {
-        history.goBack();
-      } else {
-        history.push("/");
-      }
+      // if (history.length > 2) {
+      //   history.goBack();
+      // } else {
+      //   history.push("/");
+      // }
 
       //TODO: bir önceki sayfaya dönme işlemini kontrol et.
-      //history.push("/");
+      history.push("/");
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed!");
     }
