@@ -1,6 +1,14 @@
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { loginUser } from "../store/actions/loginActions";
+import { toast } from "react-toastify";
 
 export default function LoginPage() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { isLoading } = useSelector((state) => state.login);
+
   const {
     register,
     handleSubmit,
@@ -9,8 +17,14 @@ export default function LoginPage() {
     mode: "onBlur",
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      await dispatch(loginUser(data));
+      toast.success("Successfully logged in!");
+      history.push("/");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Login failed!");
+    }
   };
 
   return (
@@ -125,9 +139,10 @@ export default function LoginPage() {
 
               <button
                 type="submit"
-                className="w-full bg-[#23A6F0] text-white py-3 px-6 rounded-lg font-medium hover:bg-[#1a8fd4]"
+                disabled={isLoading}
+                className="w-full bg-[#23A6F0] text-white py-3 px-6 rounded-lg font-medium hover:bg-[#1a8fd4] disabled:bg-[#23A6F0]/50"
               >
-                Login
+                {isLoading ? "Logging in..." : "Login"}
               </button>
             </form>
           </div>
