@@ -29,13 +29,14 @@ export const loginUser = (credentials) => {
       const response = await api.post("/login", credentials);
 
       // User bilgisini client reducer'a gönderiyoruz
-      dispatch(setUser(response.data.user));
+      console.log("User", response.data);
+      dispatch(setUser(response.data));
 
       if (credentials.rememberMe) {
         localStorage.setItem("token", response.data.token);
       }
 
-      dispatch(loginSuccess(response.data.user));
+      dispatch(loginSuccess());
       return response.data;
     } catch (error) {
       dispatch(loginFailure(error.message));
