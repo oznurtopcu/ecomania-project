@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import "./App.css";
 import PageContent from "./layout/PageContent";
 import HomePage from "./pages/HomePage";
@@ -6,8 +7,13 @@ import ShopPage from "./pages/ShopPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
+import { verifyToken } from "./utils/auth";
 
 function App() {
+  useEffect(() => {
+    verifyToken();
+  }, []);
+
   return (
     <PageContent>
       <Switch>
