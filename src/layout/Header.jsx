@@ -14,9 +14,30 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import UserMenu from "../components/UserMenu";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../store/actions/loginActions";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function Header() {
   const [isClicked, setIsClicked] = useState(false);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const user = useSelector((state) => state.client.user);
+  console.log(user);
+
+  const handleLogout = async () => {
+    try {
+      await dispatch(logout());
+      toast.success("Successfully logged out!");
+
+      history.push("/");
+    } catch (error) {
+      console.log(error);
+      toast.error("Logout failed!");
+    }
+  };
+
   const toggleMenu = () => {
     setIsClicked(!isClicked);
   };
@@ -85,9 +106,21 @@ export default function Header() {
           <div className="flex gap-3">
             <div className="hidden lg:flex items-center gap-2 text-[#23A6F0]">
               <User />
-              <a href="/login">
-                <span className="text-base">Login / Register</span>
-              </a>
+              {user?.name ? (
+                <button
+                  onClick={handleLogout}
+                  className="text-base hover:text-[#252B42] transition-colors"
+                >
+                  Logout
+                </button>
+              ) : (
+                <a
+                  href="/login"
+                  className="text-base hover:text-[#252B42] transition-colors"
+                >
+                  Login / Register
+                </a>
+              )}
             </div>
             <div className="hidden lg:flex items-center gap-4 text-[#23A6F0]">
               <Search />
