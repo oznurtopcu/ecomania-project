@@ -5,6 +5,7 @@ import { setUser } from "./clientActions";
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
+export const LOGOUT = "LOGOUT"; // Yeni eklenen
 
 // Action Creators
 export const loginRequest = () => ({
@@ -20,6 +21,28 @@ export const loginFailure = (error) => ({
   type: LOGIN_FAILURE,
   payload: error,
 });
+
+// Yeni eklenen logout action
+export const logout = () => {
+  return async (dispatch) => {
+    try {
+      // Token'ları temizle
+      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
+      // Axios header'ı temizle
+      delete api.defaults.headers.common["Authorization"];
+      // User state'i temizle
+      dispatch(setUser({}));
+
+      return {
+        type: LOGOUT,
+      };
+    } catch (error) {
+      console.error("Logout failed:", error);
+      throw error;
+    }
+  };
+};
 
 // Thunk Action
 export const loginUser = (credentials) => {
