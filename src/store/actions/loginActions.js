@@ -28,12 +28,13 @@ export const loginUser = (credentials) => {
     try {
       const response = await api.post("/login", credentials);
 
-      // User bilgisini client reducer'a gönderiyoruz
-      console.log("User", response.data);
+      // Set user in store
       dispatch(setUser(response.data));
 
       if (credentials.rememberMe) {
+        // Store token and set axios headers
         localStorage.setItem("token", response.data.token);
+        api.defaults.headers.common["Authorization"] = response.data.token;
       }
 
       dispatch(loginSuccess());
