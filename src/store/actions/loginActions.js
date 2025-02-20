@@ -31,10 +31,15 @@ export const loginUser = (credentials) => {
       // Set user in store
       dispatch(setUser(response.data));
 
+      // Always set token in axios headers
+      api.defaults.headers.common["Authorization"] = response.data.token;
+
       if (credentials.rememberMe) {
-        // Store token and set axios headers
+        // Store token in localStorage for persistent login
         localStorage.setItem("token", response.data.token);
-        api.defaults.headers.common["Authorization"] = response.data.token;
+      } else {
+        // Store token in sessionStorage - will be cleared when browser closes
+        sessionStorage.setItem("token", response.data.token);
       }
 
       dispatch(loginSuccess());
