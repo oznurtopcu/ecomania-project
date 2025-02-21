@@ -147,11 +147,28 @@ export default function Header() {
               : "-translate-y-10 opacity-0 max-h-0"
           }`}
         >
-          <nav className="flex flex-col items-center gap-8 my-12 text-3xl text-[#737373]">
-            <a href="#">Home</a>
-            <a href="#">Product</a>
-            <a href="#">Pricing</a>
+          <nav className="flex flex-col items-center gap-8 my-12 text-xl text-[#737373]">
+            <a href="/">Home</a>
+            <a href="/shop">Shop</a>
+            <a href="#">About</a>
             <a href="#">Contact</a>
+            <a href="#">Pages</a>
+            <a className="flex text-sky-500" href="/login">
+              {" "}
+              <User /> Login / Register
+            </a>
+            <a className="text-sky-500" href="#">
+              {" "}
+              <Search />{" "}
+            </a>
+            <a className="text-sky-500" href="#">
+              {" "}
+              <ShoppingCart />{" "}
+            </a>
+            <a className="text-sky-500" href="#">
+              {" "}
+              <Heart />{" "}
+            </a>
           </nav>
         </div>
       </div>
