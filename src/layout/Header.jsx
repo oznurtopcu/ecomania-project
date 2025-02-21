@@ -14,12 +14,13 @@ import {
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import UserMenu from "../components/UserMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../store/actions/loginActions";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { fetchCategories } from "../store/actions/categoryActions";
 
 export default function Header() {
   const [isClicked, setIsClicked] = useState(false);
@@ -28,6 +29,14 @@ export default function Header() {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state) => state.client.user);
+  const { categories } = useSelector((state) => state.product);
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
+
+  const womenCategories = categories.filter((cat) => cat.gender === "k");
+  const menCategories = categories.filter((cat) => cat.gender === "e");
 
   const handleLogout = async () => {
     try {
@@ -126,30 +135,17 @@ export default function Header() {
                     <h3 className="font-semibold text-[#252B42] text-lg mb-2">
                       Kadın
                     </h3>
-                    <a
-                      href="/shop/women/dresses"
-                      className="text-[#737373] hover:text-[#252B42] transition-colors"
-                    >
-                      Elbiseler
-                    </a>
-                    <a
-                      href="/shop/women/shirts"
-                      className="text-[#737373] hover:text-[#252B42] transition-colors"
-                    >
-                      Gömlekler
-                    </a>
-                    <a
-                      href="/shop/women/pants"
-                      className="text-[#737373] hover:text-[#252B42] transition-colors"
-                    >
-                      Pantolonlar
-                    </a>
-                    <a
-                      href="/shop/women/accessories"
-                      className="text-[#737373] hover:text-[#252B42] transition-colors"
-                    >
-                      Aksesuarlar
-                    </a>
+                    {womenCategories.map((category) => (
+                      <a
+                        key={category.id}
+                        href={`/shop/kadin/${category.code.split(":")[1]}/${
+                          category.id
+                        }`}
+                        className="text-[#737373] hover:text-[#252B42] transition-colors"
+                      >
+                        {category.title}
+                      </a>
+                    ))}
                   </div>
 
                   {/* Men's Categories */}
@@ -157,30 +153,17 @@ export default function Header() {
                     <h3 className="font-semibold text-[#252B42] text-lg mb-2">
                       Erkek
                     </h3>
-                    <a
-                      href="/shop/men/shirts"
-                      className="text-[#737373] hover:text-[#252B42] transition-colors"
-                    >
-                      Gömlekler
-                    </a>
-                    <a
-                      href="/shop/men/pants"
-                      className="text-[#737373] hover:text-[#252B42] transition-colors"
-                    >
-                      Pantolonlar
-                    </a>
-                    <a
-                      href="/shop/men/shoes"
-                      className="text-[#737373] hover:text-[#252B42] transition-colors"
-                    >
-                      Ayakkabılar
-                    </a>
-                    <a
-                      href="/shop/men/accessories"
-                      className="text-[#737373] hover:text-[#252B42] transition-colors"
-                    >
-                      Aksesuarlar
-                    </a>
+                    {menCategories.map((category) => (
+                      <a
+                        key={category.id}
+                        href={`/shop/erkek/${category.code.split(":")[1]}/${
+                          category.id
+                        }`}
+                        className="text-[#737373] hover:text-[#252B42] transition-colors"
+                      >
+                        {category.title}
+                      </a>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -273,59 +256,33 @@ export default function Header() {
                   {/* Women's Categories */}
                   <div className="flex flex-col gap-3">
                     <h3 className="font-semibold text-[#252B42] mb-2">Kadın</h3>
-                    <a
-                      href="/shop/women/dresses"
-                      className="text-base text-[#737373] hover:text-[#252B42]"
-                    >
-                      Elbiseler
-                    </a>
-                    <a
-                      href="/shop/women/shirts"
-                      className="text-base text-[#737373] hover:text-[#252B42]"
-                    >
-                      Gömlekler
-                    </a>
-                    <a
-                      href="/shop/women/pants"
-                      className="text-base text-[#737373] hover:text-[#252B42]"
-                    >
-                      Pantolonlar
-                    </a>
-                    <a
-                      href="/shop/women/accessories"
-                      className="text-base text-[#737373] hover:text-[#252B42]"
-                    >
-                      Aksesuarlar
-                    </a>
+                    {womenCategories.map((category) => (
+                      <a
+                        key={category.id}
+                        href={`/shop/kadin/${category.code.split(":")[1]}/${
+                          category.id
+                        }`}
+                        className="text-base text-[#737373] hover:text-[#252B42]"
+                      >
+                        {category.title}
+                      </a>
+                    ))}
                   </div>
 
                   {/* Men's Categories */}
                   <div className="flex flex-col gap-3">
                     <h3 className="font-semibold text-[#252B42] mb-2">Erkek</h3>
-                    <a
-                      href="/shop/men/shirts"
-                      className="text-base text-[#737373] hover:text-[#252B42]"
-                    >
-                      Gömlekler
-                    </a>
-                    <a
-                      href="/shop/men/pants"
-                      className="text-base text-[#737373] hover:text-[#252B42]"
-                    >
-                      Pantolonlar
-                    </a>
-                    <a
-                      href="/shop/men/shoes"
-                      className="text-base text-[#737373] hover:text-[#252B42]"
-                    >
-                      Ayakkabılar
-                    </a>
-                    <a
-                      href="/shop/men/accessories"
-                      className="text-base text-[#737373] hover:text-[#252B42]"
-                    >
-                      Aksesuarlar
-                    </a>
+                    {menCategories.map((category) => (
+                      <a
+                        key={category.id}
+                        href={`/shop/erkek/${category.code.split(":")[1]}/${
+                          category.id
+                        }`}
+                        className="text-base text-[#737373] hover:text-[#252B42]"
+                      >
+                        {category.title}
+                      </a>
+                    ))}
                   </div>
                 </div>
               </div>
