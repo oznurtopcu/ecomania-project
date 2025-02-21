@@ -1,4 +1,6 @@
-export default function CategoryCard({ image, title, itemCount }) {
+import { Star } from "lucide-react";
+
+export default function CategoryCard({ image, title, rating }) {
   return (
     <div className="relative w-full h-full group cursor-pointer">
       <div className="w-full h-full overflow-hidden">
@@ -10,7 +12,7 @@ export default function CategoryCard({ image, title, itemCount }) {
       </div>
       <div className="absolute inset-0 flex flex-col justify-end p-7 bg-gradient-to-t from-black/50 to-transparent">
         <h3 className="text-xl font-bold text-white">{title}</h3>
-        <p className="text-sm text-white/80">{itemCount} items</p>
+        <p className="text-sm text-white/80">{rating}</p>
       </div>
     </div>
   );
