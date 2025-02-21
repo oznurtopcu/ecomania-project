@@ -168,9 +168,6 @@ export default function Header() {
                 </div>
               </div>
             </div>
-            <a href="/shop" className="text-[#737373] hover:text-[#252B42]">
-              Shop
-            </a>
             <a href="#" className="text-[#737373] hover:text-[#252B42]">
               About
             </a>
