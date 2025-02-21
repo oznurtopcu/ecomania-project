@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import md5 from "md5";
 
 export default function UserMenu() {
+  //TODO: Gravatar yapısına tekrar bak, nasıl çalıştığını anla
   const { user } = useSelector((state) => state.client);
 
   if (!user || !user.email) return null;

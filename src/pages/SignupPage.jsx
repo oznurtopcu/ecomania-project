@@ -39,6 +39,7 @@ export default function SignupPage() {
   }, [dispatch]);
 
   const onSubmit = async (data) => {
+    //TODO: Signup Page için thunk action kullan, bu kadar manuel yapma
     setIsLoading(true);
     setError(null);
 
