@@ -3,7 +3,6 @@ import md5 from "md5";
 
 export default function UserMenu() {
   const { user } = useSelector((state) => state.client);
-  console.log(user);
 
   if (!user || !user.email) return null;
 

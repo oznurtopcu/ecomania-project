@@ -11,6 +11,8 @@ import {
   Instagram,
   Twitter,
   Youtube,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import { useState } from "react";
 import UserMenu from "../components/UserMenu";
@@ -21,10 +23,10 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function Header() {
   const [isClicked, setIsClicked] = useState(false);
+  const [isShopMenuOpen, setIsShopMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state) => state.client.user);
-  console.log(user);
 
   const handleLogout = async () => {
     try {
@@ -33,7 +35,6 @@ export default function Header() {
 
       history.push("/");
     } catch (error) {
-      console.log(error);
       toast.error("Logout failed!");
     }
   };
@@ -41,6 +42,11 @@ export default function Header() {
   const toggleMenu = () => {
     setIsClicked(!isClicked);
   };
+
+  const toggleShopMenu = () => {
+    setIsShopMenuOpen(!isShopMenuOpen);
+  };
+
   return (
     <header>
       {/* Top navy blue header */}
@@ -149,7 +155,86 @@ export default function Header() {
         >
           <nav className="flex flex-col items-center gap-8 my-12 text-xl text-[#737373]">
             <a href="/">Home</a>
-            <a href="/shop">Shop</a>
+
+            {/* Shop menu with dropdown */}
+            <div className="w-full">
+              <button
+                onClick={toggleShopMenu}
+                className="flex items-center justify-center w-full text-[#737373] hover:text-[#252B42]"
+              >
+                Shop {isShopMenuOpen ? <ChevronUp /> : <ChevronDown />}
+              </button>
+
+              {/* Categories dropdown */}
+              <div
+                className={`w-full transition-all duration-300 ease-in-out ${
+                  isShopMenuOpen
+                    ? "max-h-[500px] opacity-100 mt-4"
+                    : "max-h-0 opacity-0"
+                }`}
+              >
+                <div className="flex justify-between px-8 py-4 bg-gray-50">
+                  {/* Women's Categories */}
+                  <div className="flex flex-col gap-3">
+                    <h3 className="font-semibold text-[#252B42] mb-2">Kadın</h3>
+                    <a
+                      href="/shop/women/dresses"
+                      className="text-base text-[#737373] hover:text-[#252B42]"
+                    >
+                      Elbiseler
+                    </a>
+                    <a
+                      href="/shop/women/shirts"
+                      className="text-base text-[#737373] hover:text-[#252B42]"
+                    >
+                      Gömlekler
+                    </a>
+                    <a
+                      href="/shop/women/pants"
+                      className="text-base text-[#737373] hover:text-[#252B42]"
+                    >
+                      Pantolonlar
+                    </a>
+                    <a
+                      href="/shop/women/accessories"
+                      className="text-base text-[#737373] hover:text-[#252B42]"
+                    >
+                      Aksesuarlar
+                    </a>
+                  </div>
+
+                  {/* Men's Categories */}
+                  <div className="flex flex-col gap-3">
+                    <h3 className="font-semibold text-[#252B42] mb-2">Erkek</h3>
+                    <a
+                      href="/shop/men/shirts"
+                      className="text-base text-[#737373] hover:text-[#252B42]"
+                    >
+                      Gömlekler
+                    </a>
+                    <a
+                      href="/shop/men/pants"
+                      className="text-base text-[#737373] hover:text-[#252B42]"
+                    >
+                      Pantolonlar
+                    </a>
+                    <a
+                      href="/shop/men/shoes"
+                      className="text-base text-[#737373] hover:text-[#252B42]"
+                    >
+                      Ayakkabılar
+                    </a>
+                    <a
+                      href="/shop/men/accessories"
+                      className="text-base text-[#737373] hover:text-[#252B42]"
+                    >
+                      Aksesuarlar
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <a href="#">About</a>
             <a href="#">Contact</a>
             <a href="#">Pages</a>
