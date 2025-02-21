@@ -24,6 +24,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 export default function Header() {
   const [isClicked, setIsClicked] = useState(false);
   const [isShopMenuOpen, setIsShopMenuOpen] = useState(false);
+  const [isDesktopShopOpen, setIsDesktopShopOpen] = useState(false); // Yeni state
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state) => state.client.user);
@@ -47,8 +48,12 @@ export default function Header() {
     setIsShopMenuOpen(!isShopMenuOpen);
   };
 
+  const toggleDesktopShop = () => {
+    setIsDesktopShopOpen(!isDesktopShopOpen);
+  };
+
   return (
-    <header>
+    <header className="relative z-50">
       {/* Top navy blue header */}
       <div className="bg-[#252B42] text-white">
         <div className="container mx-auto px-6 py-3 hidden lg:flex justify-between items-center">
@@ -85,10 +90,101 @@ export default function Header() {
             alt="logo"
           />
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8 text-base">
+          <nav className="hidden lg:flex items-center gap-8 text-base relative">
             <a href="/" className="text-[#737373] hover:text-[#252B42]">
               Home
             </a>
+            {/* Shop Dropdown */}
+            <div className="relative">
+              <button
+                className="flex items-center gap-2 text-[#737373] hover:text-[#252B42]"
+                onClick={toggleDesktopShop}
+                onMouseEnter={() => setIsDesktopShopOpen(true)}
+                onMouseLeave={() => setIsDesktopShopOpen(false)}
+              >
+                Shop
+                {isDesktopShopOpen ? (
+                  <ChevronUp className="w-4 h-4" />
+                ) : (
+                  <ChevronDown className="w-4 h-4" />
+                )}
+              </button>
+
+              {/* Desktop Dropdown Menu */}
+              <div
+                className={`absolute top-full left-0 w-[500px] bg-white shadow-lg z-50 transform transition-all duration-300 ease-in-out ${
+                  isDesktopShopOpen
+                    ? "opacity-100 visible"
+                    : "opacity-0 invisible"
+                }`}
+                onMouseEnter={() => setIsDesktopShopOpen(true)}
+                onMouseLeave={() => setIsDesktopShopOpen(false)}
+              >
+                <div className="flex justify-between p-6">
+                  {/* Women's Categories */}
+                  <div className="flex flex-col gap-4">
+                    <h3 className="font-semibold text-[#252B42] text-lg mb-2">
+                      Kadın
+                    </h3>
+                    <a
+                      href="/shop/women/dresses"
+                      className="text-[#737373] hover:text-[#252B42] transition-colors"
+                    >
+                      Elbiseler
+                    </a>
+                    <a
+                      href="/shop/women/shirts"
+                      className="text-[#737373] hover:text-[#252B42] transition-colors"
+                    >
+                      Gömlekler
+                    </a>
+                    <a
+                      href="/shop/women/pants"
+                      className="text-[#737373] hover:text-[#252B42] transition-colors"
+                    >
+                      Pantolonlar
+                    </a>
+                    <a
+                      href="/shop/women/accessories"
+                      className="text-[#737373] hover:text-[#252B42] transition-colors"
+                    >
+                      Aksesuarlar
+                    </a>
+                  </div>
+
+                  {/* Men's Categories */}
+                  <div className="flex flex-col gap-4">
+                    <h3 className="font-semibold text-[#252B42] text-lg mb-2">
+                      Erkek
+                    </h3>
+                    <a
+                      href="/shop/men/shirts"
+                      className="text-[#737373] hover:text-[#252B42] transition-colors"
+                    >
+                      Gömlekler
+                    </a>
+                    <a
+                      href="/shop/men/pants"
+                      className="text-[#737373] hover:text-[#252B42] transition-colors"
+                    >
+                      Pantolonlar
+                    </a>
+                    <a
+                      href="/shop/men/shoes"
+                      className="text-[#737373] hover:text-[#252B42] transition-colors"
+                    >
+                      Ayakkabılar
+                    </a>
+                    <a
+                      href="/shop/men/accessories"
+                      className="text-[#737373] hover:text-[#252B42] transition-colors"
+                    >
+                      Aksesuarlar
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
             <a href="/shop" className="text-[#737373] hover:text-[#252B42]">
               Shop
             </a>
