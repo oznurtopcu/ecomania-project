@@ -1,13 +1,11 @@
-import ShopCard from "../components/ShopCard";
-import Slider from "../components/Slider";
 import ProductCard from "../components/ProductCard";
-import NewsCard from "../components/NewsCard";
 import { ChevronRight, Grid3x3, List } from "lucide-react";
 import CategoryCard from "../components/CategoryCard";
 import Pagination from "../components/Pagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../store/actions/productActions";
 
 const products = [
   {
@@ -172,10 +170,15 @@ const clients = [
 
 export default function ShopPage() {
   let history = useHistory();
-  const { categories } = useSelector((state) => state.product);
+  const dispatch = useDispatch();
+  const { categories, productList } = useSelector((state) => state.product);
   const topCategories = [...categories]
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 5);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
@@ -244,7 +247,7 @@ export default function ShopPage() {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 place-items-center">
-          {currentProducts.map((product, index) => (
+          {productList.map((product, index) => (
             <div key={index} className="w-full flex justify-center my-8">
               <button
                 onClick={() => history.push("/shop/product")}
