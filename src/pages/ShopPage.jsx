@@ -1,13 +1,11 @@
-import ShopCard from "../components/ShopCard";
-import Slider from "../components/Slider";
 import ProductCard from "../components/ProductCard";
-import NewsCard from "../components/NewsCard";
 import { ChevronRight, Grid3x3, List } from "lucide-react";
 import CategoryCard from "../components/CategoryCard";
 import Pagination from "../components/Pagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../store/actions/productActions";
 
 const products = [
   {
@@ -172,10 +170,17 @@ const clients = [
 
 export default function ShopPage() {
   let history = useHistory();
-  const { categories } = useSelector((state) => state.product);
+  const dispatch = useDispatch();
+  const { categories, productList, total, fetchState } = useSelector(
+    (state) => state.product
+  );
   const topCategories = [...categories]
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 5);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
@@ -192,6 +197,14 @@ export default function ShopPage() {
     setCurrentPage(pageNumber);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  if (fetchState === "NOT_FETCHED") {
+    return (
+      <div className="container mx-auto px-4 py-8 flex justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500" />
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4">
@@ -221,7 +234,9 @@ export default function ShopPage() {
       <div className="product-list px-4 lg:m-35">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 font-bold">
           <div className="flex flex-col md:flex-row gap-10 items-center">
-            <p className="text-[#737373] text-sm">Showing all 12 results</p>
+            <p className="text-[#737373] text-sm">
+              Showing all {productList.length} results out of {total}
+            </p>
             <div className="flex items-center gap-4">
               <p className="text-[#737373] text-sm">Views:</p>
               <button className="text-[#252B42] text-sm font-bold">
@@ -244,7 +259,7 @@ export default function ShopPage() {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 place-items-center">
-          {currentProducts.map((product, index) => (
+          {productList.map((product, index) => (
             <div key={index} className="w-full flex justify-center my-8">
               <button
                 onClick={() => history.push("/shop/product")}
