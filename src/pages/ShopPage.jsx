@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../store/actions/productActions";
+import { setFilter } from "../store/actions/productActions";
 
 const products = [
   {
@@ -175,7 +176,7 @@ export default function ShopPage() {
   console.log("categoryName::::::" + params.categoryName);
   console.log("categoryId::::::" + params.categoryId);
   const dispatch = useDispatch();
-  const { categories, productList, total, fetchState } = useSelector(
+  const { categories, productList, total, fetchState, filter } = useSelector(
     (state) => state.product
   );
   const topCategories = [...categories]
@@ -183,7 +184,6 @@ export default function ShopPage() {
     .slice(0, 5);
 
   const [sort, setSort] = useState("");
-  const [filter, setFilter] = useState("");
   const [searchInput, setSearchInput] = useState("");
 
   const fetchProductsWithParams = () => {
@@ -191,10 +191,6 @@ export default function ShopPage() {
 
     if (params.categoryId) {
       queryParams.category = params.categoryId;
-    }
-
-    if (filter) {
-      queryParams.filter = filter;
     }
 
     if (sort) {
@@ -282,14 +278,14 @@ export default function ShopPage() {
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
               />
+              {/* TODO: Filtreleme işleminde her seferinde sayfa yenileniyor. Bunu engellemek gerekiyor. */}
               <button
                 className="px-4 py-2 bg-[#23A6F0] text-white rounded-r-md text-sm"
-                onClick={() => setFilter(searchInput)}
+                onClick={() => dispatch(setFilter(searchInput))}
               >
                 Filter
               </button>
             </div>
-            {/* TODO: Filtreleme işleminde her seferinde sayfa yenileniyor. Bunu engellemek gerekiyor. */}
             <select
               className="px-4 py-2 border border-[#DEDEDE] rounded-md text-sm text-[#737373]"
               value={sort}

@@ -47,9 +47,17 @@ export const setFilter = (filter) => ({
 // Thunk action for fetching products
 export const fetchProducts =
   (queryParams = {}) =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
     try {
       dispatch(setFetchState("NOT_FETCHED"));
+
+      // Get filter from Redux store
+      const { filter } = getState().product;
+
+      // Add filter to queryParams if it exists
+      if (filter) {
+        queryParams.filter = filter;
+      }
 
       // Convert query params to URL string
       const queryString = Object.entries(queryParams)
