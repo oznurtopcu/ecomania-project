@@ -3,7 +3,7 @@ import { ChevronRight, Grid3x3, List } from "lucide-react";
 import CategoryCard from "../components/CategoryCard";
 import Pagination from "../components/Pagination";
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../store/actions/productActions";
 
@@ -170,6 +170,10 @@ const clients = [
 
 export default function ShopPage() {
   let history = useHistory();
+  let params = useParams();
+  console.log("gender::::::" + params.gender);
+  console.log("categoryName::::::" + params.categoryName);
+  console.log("categoryId::::::" + params.categoryId);
   const dispatch = useDispatch();
   const { categories, productList, total, fetchState } = useSelector(
     (state) => state.product
@@ -178,9 +182,31 @@ export default function ShopPage() {
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 5);
 
+  const [sort, setSort] = useState("");
+  const [filter, setFilter] = useState("");
+  const [searchInput, setSearchInput] = useState("");
+
+  const fetchProductsWithParams = () => {
+    let queryParams = {};
+
+    if (params.categoryId) {
+      queryParams.category = params.categoryId;
+    }
+
+    if (filter) {
+      queryParams.filter = filter;
+    }
+
+    if (sort) {
+      queryParams.sort = sort;
+    }
+
+    dispatch(fetchProducts(queryParams));
+  };
+
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    fetchProductsWithParams();
+  }, [dispatch, params.categoryId, filter, sort]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
@@ -247,15 +273,34 @@ export default function ShopPage() {
               </button>
             </div>
           </div>
-          <div className="flex flex-row gap-4 items-center">
-            <select className="px-4 py-2 border border-[#DEDEDE] rounded-md text-sm text-[#737373]">
-              <option>Popularity</option>
-              <option>Price: Low to High</option>
-              <option>Price: High to Low</option>
+          <div className="flex flex-row justify-between items-center gap-4">
+            <div className="flex flex-row">
+              <input
+                type="text"
+                placeholder="Search products..."
+                className="px-4 py-2 border border-[#DEDEDE] rounded-l-md text-sm text-[#737373]"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+              />
+              <button
+                className="px-4 py-2 bg-[#23A6F0] text-white rounded-r-md text-sm"
+                onClick={() => setFilter(searchInput)}
+              >
+                Filter
+              </button>
+            </div>
+            {/* TODO: Filtreleme işleminde her seferinde sayfa yenileniyor. Bunu engellemek gerekiyor. */}
+            <select
+              className="px-4 py-2 border border-[#DEDEDE] rounded-md text-sm text-[#737373]"
+              value={sort}
+              onChange={(e) => setSort(e.target.value)}
+            >
+              <option value="">Sort by</option>
+              <option value="price:asc">Price: Low to High</option>
+              <option value="price:desc">Price: High to Low</option>
+              <option value="rating:asc">Rating: Low to High</option>
+              <option value="rating:desc">Rating: High to Low</option>
             </select>
-            <button className="px-4 py-2 bg-[#23A6F0] text-white rounded-md text-sm">
-              Filter
-            </button>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 place-items-center">
