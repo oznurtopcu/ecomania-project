@@ -45,13 +45,25 @@ export const setFilter = (filter) => ({
 });
 
 // Thunk action for fetching products
-export const fetchProducts = () => async (dispatch) => {
-  try {
-    const response = await api.get("/products");
-    dispatch(setProductList(response.data.products));
-    dispatch(setTotal(response.data.total));
-    dispatch(setFetchState("FETCHED"));
-  } catch (error) {
-    console.error("fetchProducts error:", error);
-  }
-};
+export const fetchProducts =
+  (queryParams = {}) =>
+  async (dispatch) => {
+    try {
+      dispatch(setFetchState("NOT_FETCHED"));
+
+      // Convert query params to URL string
+      const queryString = Object.entries(queryParams)
+        .map(([key, value]) => `${key}=${value}`)
+        .join("&");
+
+      const url = `/products${queryString ? `?${queryString}` : ""}`;
+      const response = await api.get(url);
+
+      dispatch(setProductList(response.data.products));
+      dispatch(setTotal(response.data.total));
+      dispatch(setFetchState("FETCHED"));
+    } catch (error) {
+      console.error("fetchProducts error:", error);
+      dispatch(setFetchState("ERROR"));
+    }
+  };
