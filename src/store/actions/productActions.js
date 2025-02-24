@@ -50,6 +50,7 @@ export const fetchProducts = () => async (dispatch) => {
     const response = await api.get("/products");
     dispatch(setProductList(response.data.products));
     dispatch(setTotal(response.data.total));
+    dispatch(setFetchState("FETCHED"));
   } catch (error) {
     console.error("fetchProducts error:", error);
   }

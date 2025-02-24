@@ -171,7 +171,7 @@ const clients = [
 export default function ShopPage() {
   let history = useHistory();
   const dispatch = useDispatch();
-  const { categories, productList, total } = useSelector(
+  const { categories, productList, total, fetchState } = useSelector(
     (state) => state.product
   );
   const topCategories = [...categories]
@@ -197,6 +197,14 @@ export default function ShopPage() {
     setCurrentPage(pageNumber);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  if (fetchState === "NOT_FETCHED") {
+    return (
+      <div className="container mx-auto px-4 py-8 flex justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500" />
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4">
