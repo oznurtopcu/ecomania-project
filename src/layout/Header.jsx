@@ -93,11 +93,13 @@ export default function Header() {
       {/* Main header */}
       <div className="container mx-auto font-montserrat">
         <div className="flex justify-between items-center p-6 text-3xl text-[#737373]">
-          <img
-            className="w-36"
-            src="https://img.logoipsum.com/348.svg"
-            alt="logo"
-          />
+          <a href="/">
+            <img
+              className="w-36"
+              src="https://img.logoipsum.com/348.svg"
+              alt="logo"
+            />
+          </a>
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8 text-base relative">
             <a href="/" className="text-[#737373] hover:text-[#252B42]">
