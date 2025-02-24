@@ -171,7 +171,9 @@ const clients = [
 export default function ShopPage() {
   let history = useHistory();
   const dispatch = useDispatch();
-  const { categories, productList } = useSelector((state) => state.product);
+  const { categories, productList, total } = useSelector(
+    (state) => state.product
+  );
   const topCategories = [...categories]
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 5);
@@ -224,7 +226,9 @@ export default function ShopPage() {
       <div className="product-list px-4 lg:m-35">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 font-bold">
           <div className="flex flex-col md:flex-row gap-10 items-center">
-            <p className="text-[#737373] text-sm">Showing all 12 results</p>
+            <p className="text-[#737373] text-sm">
+              Showing all {productList.length} results out of {total}
+            </p>
             <div className="flex items-center gap-4">
               <p className="text-[#737373] text-sm">Views:</p>
               <button className="text-[#252B42] text-sm font-bold">
