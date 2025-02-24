@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../store/actions/productActions";
-import { setFilter } from "../store/actions/productActions";
+import { setFilter, setSort } from "../store/actions/productActions";
 
 const products = [
   {
@@ -172,36 +172,20 @@ const clients = [
 export default function ShopPage() {
   let history = useHistory();
   let params = useParams();
-  console.log("gender::::::" + params.gender);
-  console.log("categoryName::::::" + params.categoryName);
-  console.log("categoryId::::::" + params.categoryId);
+  // console.log("gender::::::" + params.gender);
+  // console.log("categoryName::::::" + params.categoryName);
+  // console.log("categoryId::::::" + params.categoryId);
   const dispatch = useDispatch();
-  const { categories, productList, total, fetchState, filter } = useSelector(
-    (state) => state.product
-  );
+  const { categories, productList, total, fetchState, filter, sort } =
+    useSelector((state) => state.product);
   const topCategories = [...categories]
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 5);
 
-  const [sort, setSort] = useState("");
   const [searchInput, setSearchInput] = useState("");
 
-  const fetchProductsWithParams = () => {
-    let queryParams = {};
-
-    if (params.categoryId) {
-      queryParams.category = params.categoryId;
-    }
-
-    if (sort) {
-      queryParams.sort = sort;
-    }
-
-    dispatch(fetchProducts(queryParams));
-  };
-
   useEffect(() => {
-    fetchProductsWithParams();
+    dispatch(fetchProducts(params.categoryId));
   }, [dispatch, params.categoryId, filter, sort]);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -289,7 +273,7 @@ export default function ShopPage() {
             <select
               className="px-4 py-2 border border-[#DEDEDE] rounded-md text-sm text-[#737373]"
               value={sort}
-              onChange={(e) => setSort(e.target.value)}
+              onChange={(e) => dispatch(setSort(e.target.value))}
             >
               <option value="">Sort by</option>
               <option value="price:asc">Price: Low to High</option>

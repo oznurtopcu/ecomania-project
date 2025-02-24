@@ -7,6 +7,7 @@ export const SET_FETCH_STATE = "SET_FETCH_STATE";
 export const SET_LIMIT = "SET_LIMIT";
 export const SET_OFFSET = "SET_OFFSET";
 export const SET_FILTER = "SET_FILTER";
+export const SET_SORT = "SET_SORT";
 
 // Action Creators
 export const setCategories = (categories) => ({
@@ -44,34 +45,51 @@ export const setFilter = (filter) => ({
   payload: filter,
 });
 
+export const setSort = (sort) => ({
+  type: SET_SORT,
+  payload: sort,
+});
+
 // Thunk action for fetching products
-export const fetchProducts =
-  (queryParams = {}) =>
-  async (dispatch, getState) => {
-    try {
-      dispatch(setFetchState("NOT_FETCHED"));
+export const fetchProducts = (catId) => async (dispatch, getState) => {
+  try {
+    dispatch(setFetchState("NOT_FETCHED"));
+    let queryParams = {
+      category: catId,
+    };
 
-      // Get filter from Redux store
-      const { filter } = getState().product;
+    // Get filter from Redux store
+    const { filter, sort, limit, offset } = getState().product;
 
-      // Add filter to queryParams if it exists
-      if (filter) {
-        queryParams.filter = filter;
-      }
-
-      // Convert query params to URL string
-      const queryString = Object.entries(queryParams)
-        .map(([key, value]) => `${key}=${value}`)
-        .join("&");
-
-      const url = `/products${queryString ? `?${queryString}` : ""}`;
-      const response = await api.get(url);
-
-      dispatch(setProductList(response.data.products));
-      dispatch(setTotal(response.data.total));
-      dispatch(setFetchState("FETCHED"));
-    } catch (error) {
-      console.error("fetchProducts error:", error);
-      dispatch(setFetchState("ERROR"));
+    // Add filter to queryParams if it exists
+    if (filter) {
+      queryParams.filter = filter;
     }
-  };
+    if (sort) {
+      queryParams.sort = sort;
+    }
+    if (limit) {
+      queryParams.limit = limit;
+    }
+    if (offset) {
+      queryParams.offset = offset;
+    }
+
+    // Convert query params to URL string
+    const queryString = Object.entries(queryParams)
+      .map(([key, value]) => `${key}=${value}`)
+      .join("&");
+
+    console.log("queryString:::::::::::::::::::::::::::" + queryString);
+
+    const url = `/products${queryString ? `?${queryString}` : ""}`;
+    const response = await api.get(url);
+
+    dispatch(setProductList(response.data.products));
+    dispatch(setTotal(response.data.total));
+    dispatch(setFetchState("FETCHED"));
+  } catch (error) {
+    console.error("fetchProducts error:", error);
+    dispatch(setFetchState("ERROR"));
+  }
+};
