@@ -303,18 +303,27 @@ export default function ShopPage() {
             </select>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 place-items-center">
-          {productList.map((product, index) => (
-            <div key={index} className="w-full flex justify-center my-8">
-              <button
-                onClick={() => history.push("/shop/product")}
-                className="w-full cursor-pointer"
-              >
-                <ProductCard key={product.id} product={product} />
-              </button>
-            </div>
-          ))}
-        </div>
+
+        {productList.length === 0 ? (
+          <div className="flex justify-center items-center h-64">
+            <p className="text-lg text-gray-500">
+              No products found in the relevant category
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 place-items-center">
+            {productList.map((product, index) => (
+              <div key={index} className="w-full flex justify-center my-8">
+                <button
+                  onClick={() => history.push("/shop/product")}
+                  className="w-full cursor-pointer"
+                >
+                  <ProductCard key={product.id} product={product} />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
 
         <Pagination
           totalItems={products.length}
