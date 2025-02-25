@@ -55,7 +55,7 @@ export default function ShopPage() {
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 5);
 
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState(filter);
   const currentPage = Math.floor(offset / limit) + 1;
 
   useEffect(() => {

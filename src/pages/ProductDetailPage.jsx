@@ -1,6 +1,6 @@
 import { useHistory, useParams } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
-import { ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import ProductDetailCard from "../components/ProductDetailCard";
 import { useEffect } from "react";
 import { fetchProductById } from "../store/actions/productActions";
@@ -81,8 +81,15 @@ export default function ProductDetailPage() {
 
   return (
     <div className="container mx-auto my-8">
-      <div className="page-breadcrumb flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-8 px-6 py-10 lg:mx-35">
-        <p className="flex items-center text-[#BDBDBD]">
+      <div className="page-breadcrumb flex flex-col sm:flex-row justify-between items-center gap-8 px-6 py-10 lg:mx-35">
+        <button
+          onClick={() => history.goBack()}
+          className="flex items-center gap-2 px-4 py-2 text-[#252B42] hover:text-[#23A6F0] transition-colors duration-200 border border-[#E8E8E8] rounded-md"
+        >
+          <ChevronLeft size={16} strokeWidth={1} />
+          Back
+        </button>
+        <p className="flex items-center text-[#BDBDBD] ml-auto">
           <span className="text-[#252B42]">Home</span>
           <ChevronRight size={16} strokeWidth={1} /> Shop{" "}
         </p>
