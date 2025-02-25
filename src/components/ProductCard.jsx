@@ -17,13 +17,12 @@ export default function ProductCard({ product }) {
   } = product;
 
   const colors = ["#3B82F6", "#F97316", "#6B7280", "#1F2937"];
-
   return (
     <div className="w-64 bg-white shadow-sm text-center">
       {/* Product Image */}
       <div className="relative aspect-[3/4] mb-4">
         <img
-          src={images[0].url}
+          src={images[0]?.url}
           alt={name}
           className="w-full h-full object-cover "
         />
