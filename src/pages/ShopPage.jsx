@@ -169,7 +169,7 @@ export default function ShopPage() {
                       const productNameSlug = product.name
                         .toLowerCase()
                         .replace(/ /g, "-");
-                      dispatch(fetchProductById(product.id));
+                      // dispatch(fetchProductById(product.id));
                       history.push(
                         `/shop/${params.gender}/${params.categoryName}/${params.categoryId}/${productNameSlug}/${product.id}`
                       );
