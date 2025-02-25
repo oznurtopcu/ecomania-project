@@ -2,8 +2,13 @@ import ShopCard from "../components/ShopCard";
 import Slider from "../components/Slider";
 import ProductCard from "../components/ProductCard";
 import NewsCard from "../components/NewsCard";
+import { useDispatch } from "react-redux";
+import { fetchProductById } from "../store/actions/productActions";
+import { useHistory } from "react-router-dom";
 
 export default function HomePage() {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const shopCardsData = [1, 2, 3, 4]; // Dummy data for ShopCard components
   const products = [
     {
@@ -140,7 +145,20 @@ export default function HomePage() {
           </div>
           <div className="flex md:flex-row flex-col items-center justify-center gap-8">
             {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <div
+                key={product.id}
+                onClick={() => {
+                  dispatch(fetchProductById(product.id));
+                  const productNameSlug = product.name
+                    .toLowerCase()
+                    .replace(/ /g, "-");
+                  history.push(
+                    `/shop/all/featured/0/${productNameSlug}/${product.id}`
+                  );
+                }}
+              >
+                <ProductCard key={product.id} product={product} />
+              </div>
             ))}
           </div>
         </div>
