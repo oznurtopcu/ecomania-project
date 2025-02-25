@@ -7,6 +7,7 @@ import {
   SET_PRODUCT_LIST,
   SET_TOTAL,
   SET_SORT,
+  SET_PRODUCT_DETAIL,
 } from "../actions/productActions";
 
 //initial state
@@ -19,6 +20,7 @@ const initialState = {
   filter: "",
   sort: "",
   fetchState: "NOT_FETCHED",
+  productDetail: {},
 };
 
 // Reducer
@@ -63,6 +65,11 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         sort: action.payload,
+      };
+    case SET_PRODUCT_DETAIL:
+      return {
+        ...state,
+        productDetail: action.payload,
       };
     default:
       return state;
