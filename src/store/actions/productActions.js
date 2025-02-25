@@ -8,6 +8,7 @@ export const SET_LIMIT = "SET_LIMIT";
 export const SET_OFFSET = "SET_OFFSET";
 export const SET_FILTER = "SET_FILTER";
 export const SET_SORT = "SET_SORT";
+export const SET_PRODUCT_DETAIL = "SET_PRODUCT_DETAIL";
 
 // Action Creators
 export const setCategories = (categories) => ({
@@ -48,6 +49,11 @@ export const setFilter = (filter) => ({
 export const setSort = (sort) => ({
   type: SET_SORT,
   payload: sort,
+});
+
+export const setProductDetail = (product) => ({
+  type: SET_PRODUCT_DETAIL,
+  payload: product,
 });
 
 // Thunk action for fetching products
@@ -91,5 +97,36 @@ export const fetchProducts = (catId) => async (dispatch, getState) => {
   } catch (error) {
     console.error("fetchProducts error:", error);
     dispatch(setFetchState("ERROR"));
+  }
+};
+
+// Thunk action for fetching a single product by ID
+export const fetchProductById = (productId) => async (dispatch) => {
+  try {
+    console.log("Starting fetchProductById with ID:", productId);
+    dispatch(setFetchState("PRODUCT_NOT_FETCHED"));
+    dispatch(setProductDetail({}));
+
+    console.log("Making API call to:", `/products/${productId}`);
+    const response = await api.get(`/products/${productId}`);
+    console.log("API Response:", response);
+
+    if (response.data) {
+      console.log("Dispatching product detail:", response.data);
+      dispatch(setProductDetail(response.data));
+      dispatch(setFetchState("PRODUCT_FETCHED"));
+    } else {
+      console.log("No data in response");
+      dispatch(setFetchState("PRODUCT_ERROR"));
+      dispatch(setProductDetail({}));
+    }
+  } catch (error) {
+    console.error("fetchProductById error details:", {
+      message: error.message,
+      status: error.response?.status,
+      data: error.response?.data,
+    });
+    dispatch(setFetchState("PRODUCT_ERROR"));
+    dispatch(setProductDetail({}));
   }
 };

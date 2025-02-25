@@ -10,6 +10,7 @@ import {
   setFilter,
   setSort,
   setOffset,
+  fetchProductById,
 } from "../store/actions/productActions";
 
 const clients = [
@@ -54,7 +55,7 @@ export default function ShopPage() {
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 5);
 
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState(filter);
   const currentPage = Math.floor(offset / limit) + 1;
 
   useEffect(() => {
@@ -164,7 +165,15 @@ export default function ShopPage() {
               {productList?.map((product, index) => (
                 <div key={index} className="w-full flex justify-center my-8">
                   <button
-                    onClick={() => history.push("/shop/product")}
+                    onClick={() => {
+                      const productNameSlug = product.name
+                        .toLowerCase()
+                        .replace(/ /g, "-");
+                      // dispatch(fetchProductById(product.id));
+                      history.push(
+                        `/shop/${params.gender}/${params.categoryName}/${params.categoryId}/${productNameSlug}/${product.id}`
+                      );
+                    }}
                     className="w-full cursor-pointer"
                   >
                     <ProductCard key={product.id} product={product} />

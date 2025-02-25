@@ -1,10 +1,17 @@
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
-import { ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import ProductDetailCard from "../components/ProductDetailCard";
+import { useEffect } from "react";
+import { fetchProductById } from "../store/actions/productActions";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function ProductDetailPage() {
   let history = useHistory();
+  let params = useParams();
+  const dispatch = useDispatch();
+  const { fetchState } = useSelector((state) => state.product);
+
   const products = [
     {
       id: 1,
@@ -12,7 +19,7 @@ export default function ProductDetailPage() {
       department: "English Department",
       originalPrice: 16.48,
       salePrice: 6.48,
-      image: "https://picsum.photos/200/300",
+      images: "https://picsum.photos/200/300",
       colors: ["#3B82F6", "#F97316", "#6B7280", "#1F2937"],
     },
     {
@@ -21,7 +28,7 @@ export default function ProductDetailPage() {
       department: "Computer Science",
       originalPrice: 24.99,
       salePrice: 12.99,
-      image: "https://picsum.photos/200/300",
+      images: "https://picsum.photos/200/300",
       colors: ["#3B82F6", "#F97316", "#6B7280", "#1F2937"],
     },
     {
@@ -30,7 +37,7 @@ export default function ProductDetailPage() {
       department: "Business Department",
       originalPrice: 19.99,
       salePrice: 9.99,
-      image: "https://picsum.photos/200/300",
+      images: "https://picsum.photos/200/300",
       colors: ["#3B82F6", "#F97316", "#6B7280", "#1F2937"],
     },
     {
@@ -39,44 +46,8 @@ export default function ProductDetailPage() {
       department: "Design Department",
       originalPrice: 29.99,
       salePrice: 15.99,
-      image: "https://picsum.photos/200/300",
+      images: "https://picsum.photos/200/300",
       colors: ["#3B82F6", "#F97316", "#6B7280", "#1F2937"],
-    },
-    {
-      id: 5,
-      title: "UI/UX Design",
-      department: "Design Department",
-      originalPrice: 29.99,
-      salePrice: 15.99,
-      image: "https://picsum.photos/200/300",
-      colors: ["#3B82F6", "#F97316", "#6B7280", "#1F2937"],
-    },
-    {
-      id: 6,
-      title: "Data Science",
-      department: "Mathematics Department",
-      originalPrice: 34.99,
-      salePrice: 19.99,
-      image: "https://picsum.photos/200/300",
-      colors: ["#10B981", "#F43F5E", "#6366F1", "#D97706"],
-    },
-    {
-      id: 7,
-      title: "Cyber Security",
-      department: "Computer Science",
-      originalPrice: 39.99,
-      salePrice: 22.99,
-      image: "https://picsum.photos/200/300",
-      colors: ["#EF4444", "#14B8A6", "#A855F7", "#6D28D9"],
-    },
-    {
-      id: 8,
-      title: "Artificial Intelligence",
-      department: "Engineering Department",
-      originalPrice: 45.99,
-      salePrice: 25.99,
-      image: "https://picsum.photos/200/300",
-      colors: ["#22C55E", "#EAB308", "#3B82F6", "#F87171"],
     },
   ];
 
@@ -102,17 +73,35 @@ export default function ProductDetailPage() {
       image: "https://img.logoipsum.com/354.svg",
     },
   ];
+  window.scrollTo(0, 0);
+
+  useEffect(() => {
+    dispatch(fetchProductById(params.productId));
+  }, [dispatch, params.productId]);
 
   return (
     <div className="container mx-auto my-8">
-      <div className="page-breadcrumb flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-8 px-6 py-10 lg:mx-35">
-        <p className="flex items-center text-[#BDBDBD]">
+      <div className="page-breadcrumb flex flex-col sm:flex-row justify-between items-center gap-8 px-6 py-10 lg:mx-35">
+        <button
+          onClick={() => history.goBack()}
+          className="flex items-center gap-2 px-4 py-2 text-[#252B42] hover:text-[#23A6F0] transition-colors duration-200 border border-[#E8E8E8] rounded-md"
+        >
+          <ChevronLeft size={16} strokeWidth={1} />
+          Back
+        </button>
+        <p className="flex items-center text-[#BDBDBD] ml-auto">
           <span className="text-[#252B42]">Home</span>
           <ChevronRight size={16} strokeWidth={1} /> Shop{" "}
         </p>
       </div>
       <div className="product-detail">
-        <ProductDetailCard />
+        {fetchState === "PRODUCT_NOT_FETCHED" ? (
+          <div className="container mx-auto p-4 flex justify-center items-center min-h-[400px]">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          </div>
+        ) : (
+          <ProductDetailCard />
+        )}
       </div>
       <div className="product-description px-4 lg:mx-35 my-20">
         {/* Description Header */}
@@ -206,7 +195,14 @@ export default function ProductDetailPage() {
           {products.map((product, index) => (
             <div key={index} className="w-full flex justify-center my-8">
               <button
-                onClick={() => history.push("/shop/product")}
+                onClick={() => {
+                  const productNameSlug = product.title
+                    .toLowerCase()
+                    .replace(/ /g, "-");
+                  history.push(
+                    `/shop/${params.gender}/${params.categoryName}/${params.categoryId}/${productNameSlug}/${product.id}`
+                  );
+                }}
                 className="cursor-pointer"
               >
                 <ProductCard key={product.id} product={product} />

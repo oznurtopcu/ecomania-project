@@ -6,29 +6,42 @@ import {
   ChevronRight,
   ChevronLeft,
 } from "lucide-react";
+import { useSelector } from "react-redux";
 
 export default function ProductDetailCard() {
-  // Sample product data
-  const productData = {
-    name: "Floating Phone",
-    price: "$1,139.33",
-    inStock: true,
-    description:
-      "Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT official consequent door ENIM RELIT Mollie. Excitation venial consequent sent nostrum met.",
-    colors: [
-      { id: 1, name: "Blue", code: "#32AADB" },
-      { id: 2, name: "Green", code: "#4CD163" },
-      { id: 3, name: "Orange", code: "#EF8E48" },
-      { id: 4, name: "Navy", code: "#2D3047" },
-    ],
-    images: [
-      "https://picsum.photos/350/350",
-      "https://picsum.photos/350/300",
-      "https://picsum.photos/450/300",
-    ],
-    rating: 4,
-    reviewCount: 10,
-  };
+  const { productDetail, fetchState } = useSelector((state) => state.product);
+
+  // Error state
+  if (fetchState === "PRODUCT_ERROR") {
+    return (
+      <div className="container mx-auto p-4 flex items-center justify-center min-h-[400px]">
+        <div className="text-red-500 text-center">
+          <h2 className="text-xl font-bold mb-2">
+            Ürün yüklenirken bir hata oluştu
+          </h2>
+          <p>Lütfen daha sonra tekrar deneyin</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Safely destructure product data with default values
+  const {
+    name = "",
+    price = "",
+    stock = 0,
+    description = "",
+    images = [],
+    rating = 0,
+  } = productDetail || {};
+
+  const colors = [
+    { id: 1, name: "Blue", code: "#32AADB" },
+    { id: 2, name: "Green", code: "#4CD163" },
+    { id: 3, name: "Orange", code: "#EF8E48" },
+    { id: 4, name: "Navy", code: "#2D3047" },
+  ];
+  const reviewCount = 10;
 
   // State variables
   const [selectedColor, setSelectedColor] = useState(null);
@@ -43,7 +56,7 @@ export default function ProductDetailCard() {
   const renderStars = () => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
-      if (i <= productData.rating) {
+      if (i <= rating) {
         stars.push(
           <span key={i} className="text-yellow-400">
             ★
@@ -68,16 +81,16 @@ export default function ProductDetailCard() {
           {/* Main Image */}
           <div className="mb-4 overflow-hidden shadow-md">
             <img
-              src={productData.images[currentImage]}
-              alt={productData.name}
-              className="w-full aspect-[6/5] object-cover"
+              src={images[currentImage]?.url}
+              alt={name}
+              className="w-full aspect-[6/5] object-contain"
             />
             {/* Navigation arrows */}
             <button
               className="absolute left-3 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-80 transition-colors"
               onClick={() =>
                 setCurrentImage((prev) =>
-                  prev === 0 ? productData.images.length - 1 : prev - 1
+                  prev === 0 ? images.length - 1 : prev - 1
                 )
               }
             >
@@ -87,7 +100,7 @@ export default function ProductDetailCard() {
               className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-80 transition-colors"
               onClick={() =>
                 setCurrentImage((prev) =>
-                  prev === productData.images.length - 1 ? 0 : prev + 1
+                  prev === images.length - 1 ? 0 : prev + 1
                 )
               }
             >
@@ -97,7 +110,7 @@ export default function ProductDetailCard() {
 
           {/* Thumbnail Preview */}
           <div className="flex space-x-2">
-            {productData.images.map((img, index) => (
+            {images.map((img, index) => (
               <div
                 key={index}
                 className={`border rounded-md overflow-hidden cursor-pointer transition-all ${
@@ -108,9 +121,9 @@ export default function ProductDetailCard() {
                 onClick={() => setCurrentImage(index)}
               >
                 <img
-                  src={img}
+                  src={img.url}
                   alt={`thumbnail-${index}`}
-                  className="w-24 h-16 object-cover"
+                  className="w-24 h-16 object-contain"
                 />
               </div>
             ))}
@@ -120,27 +133,21 @@ export default function ProductDetailCard() {
         {/* Product Info Section */}
         <div className="flex flex-col space-y-6 justify-start p-6">
           {/* Product Name */}
-          <h1 className="text-3xl font-bold text-gray-800">
-            {productData.name}
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-800">{name}</h1>
 
           {/* Ratings */}
           <div className="flex items-center">
             <div className="flex mr-2">{renderStars()}</div>
-            <span className="text-gray-600">
-              {productData.reviewCount} Reviews
-            </span>
+            <span className="text-gray-600">{reviewCount} Reviews</span>
           </div>
 
           {/* Price */}
-          <h2 className="text-3xl font-bold text-gray-900">
-            {productData.price}
-          </h2>
+          <h2 className="text-3xl font-bold text-gray-900">${price}</h2>
 
           {/* Availability */}
           <div className="flex items-center">
             <span className="font-medium mr-2">Availability:</span>
-            {productData.inStock ? (
+            {stock ? (
               <span className="text-blue-500 font-medium">In Stock</span>
             ) : (
               <span className="text-red-500 font-medium">Out of Stock</span>
@@ -148,16 +155,14 @@ export default function ProductDetailCard() {
           </div>
 
           {/* Description */}
-          <p className="text-gray-700 leading-relaxed">
-            {productData.description}
-          </p>
+          <p className="text-gray-700 leading-relaxed">{description}</p>
 
           <div className="border-t py-4 my-2 text-gray-500"></div>
 
           {/* Color Options */}
           <div>
             <div className="flex space-x-3">
-              {productData.colors.map((color) => (
+              {colors.map((color) => (
                 <button
                   key={color.id}
                   style={{ backgroundColor: color.code }}
