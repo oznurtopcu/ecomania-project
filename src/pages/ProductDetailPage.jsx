@@ -10,6 +10,7 @@ export default function ProductDetailPage() {
   let history = useHistory();
   let params = useParams();
   const dispatch = useDispatch();
+  const { fetchState } = useSelector((state) => state.product);
 
   const products = [
     {
@@ -72,36 +73,11 @@ export default function ProductDetailPage() {
       image: "https://img.logoipsum.com/354.svg",
     },
   ];
+  window.scrollTo(0, 0);
 
   useEffect(() => {
-    // Eğer productDetail boşsa, yeni istek at
     dispatch(fetchProductById(params.productId));
   }, [dispatch, params.productId]);
-
-  const { productDetail, fetchState } = useSelector((state) => state.product);
-
-  // Loading state
-  if (fetchState === "NOT_FETCHED") {
-    return (
-      <div className="container mx-auto p-4 flex justify-center items-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
-    );
-  }
-
-  // Error state
-  if (fetchState === "ERROR") {
-    return (
-      <div className="container mx-auto p-4 flex justify-center items-center min-h-[400px]">
-        <div className="text-red-500 text-center">
-          <h2 className="text-xl font-bold mb-2">
-            Ürün yüklenirken bir hata oluştu
-          </h2>
-          <p>Lütfen daha sonra tekrar deneyin</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="container mx-auto my-8">
@@ -112,7 +88,13 @@ export default function ProductDetailPage() {
         </p>
       </div>
       <div className="product-detail">
-        <ProductDetailCard />
+        {fetchState === "PRODUCT_NOT_FETCHED" ? (
+          <div className="container mx-auto p-4 flex justify-center items-center min-h-[400px]">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          </div>
+        ) : (
+          <ProductDetailCard />
+        )}
       </div>
       <div className="product-description px-4 lg:mx-35 my-20">
         {/* Description Header */}

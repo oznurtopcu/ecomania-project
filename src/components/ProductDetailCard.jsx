@@ -11,17 +11,8 @@ import { useSelector } from "react-redux";
 export default function ProductDetailCard() {
   const { productDetail, fetchState } = useSelector((state) => state.product);
 
-  // Loading state
-  if (fetchState === "NOT_FETCHED") {
-    return (
-      <div className="container mx-auto p-4 flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
-    );
-  }
-
   // Error state
-  if (fetchState === "ERROR") {
+  if (fetchState === "PRODUCT_ERROR") {
     return (
       <div className="container mx-auto p-4 flex items-center justify-center min-h-[400px]">
         <div className="text-red-500 text-center">
@@ -90,7 +81,7 @@ export default function ProductDetailCard() {
           {/* Main Image */}
           <div className="mb-4 overflow-hidden shadow-md">
             <img
-              src={images[currentImage].url}
+              src={images[currentImage]?.url}
               alt={name}
               className="w-full aspect-[6/5] object-contain"
             />
