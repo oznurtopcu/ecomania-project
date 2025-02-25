@@ -104,7 +104,7 @@ export const fetchProducts = (catId) => async (dispatch, getState) => {
 export const fetchProductById = (productId) => async (dispatch) => {
   try {
     console.log("Starting fetchProductById with ID:", productId);
-    dispatch(setFetchState("NOT_FETCHED"));
+    dispatch(setFetchState("PRODUCT_NOT_FETCHED"));
     dispatch(setProductDetail({}));
 
     console.log("Making API call to:", `/products/${productId}`);
@@ -114,10 +114,10 @@ export const fetchProductById = (productId) => async (dispatch) => {
     if (response.data) {
       console.log("Dispatching product detail:", response.data);
       dispatch(setProductDetail(response.data));
-      dispatch(setFetchState("FETCHED"));
+      dispatch(setFetchState("PRODUCT_FETCHED"));
     } else {
       console.log("No data in response");
-      dispatch(setFetchState("ERROR"));
+      dispatch(setFetchState("PRODUCT_ERROR"));
       dispatch(setProductDetail({}));
     }
   } catch (error) {
@@ -126,7 +126,7 @@ export const fetchProductById = (productId) => async (dispatch) => {
       status: error.response?.status,
       data: error.response?.data,
     });
-    dispatch(setFetchState("ERROR"));
+    dispatch(setFetchState("PRODUCT_ERROR"));
     dispatch(setProductDetail({}));
   }
 };
