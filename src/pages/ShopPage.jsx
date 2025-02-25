@@ -5,166 +5,32 @@ import Pagination from "../components/Pagination";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../store/actions/productActions";
-import { setFilter, setSort } from "../store/actions/productActions";
-
-const products = [
-  {
-    id: 1,
-    title: "Graphic Design",
-    department: "English Department",
-    originalPrice: 16.48,
-    salePrice: 6.48,
-    image: "https://picsum.photos/200/300",
-    colors: ["#3B82F6", "#F97316", "#6B7280", "#1F2937"],
-  },
-  {
-    id: 2,
-    title: "Web Development",
-    department: "Computer Science",
-    originalPrice: 24.99,
-    salePrice: 12.99,
-    image: "https://picsum.photos/200/300",
-    colors: ["#3B82F6", "#F97316", "#6B7280", "#1F2937"],
-  },
-  {
-    id: 3,
-    title: "Digital Marketing",
-    department: "Business Department",
-    originalPrice: 19.99,
-    salePrice: 9.99,
-    image: "https://picsum.photos/200/300",
-    colors: ["#3B82F6", "#F97316", "#6B7280", "#1F2937"],
-  },
-  {
-    id: 4,
-    title: "UI/UX Design",
-    department: "Design Department",
-    originalPrice: 29.99,
-    salePrice: 15.99,
-    image: "https://picsum.photos/200/300",
-    colors: ["#3B82F6", "#F97316", "#6B7280", "#1F2937"],
-  },
-  {
-    id: 5,
-    title: "UI/UX Design",
-    department: "Design Department",
-    originalPrice: 29.99,
-    salePrice: 15.99,
-    image: "https://picsum.photos/200/300",
-    colors: ["#3B82F6", "#F97316", "#6B7280", "#1F2937"],
-  },
-  {
-    id: 6,
-    title: "Data Science",
-    department: "Mathematics Department",
-    originalPrice: 34.99,
-    salePrice: 19.99,
-    image: "https://picsum.photos/200/300",
-    colors: ["#10B981", "#F43F5E", "#6366F1", "#D97706"],
-  },
-  {
-    id: 7,
-    title: "Cyber Security",
-    department: "Computer Science",
-    originalPrice: 39.99,
-    salePrice: 22.99,
-    image: "https://picsum.photos/200/300",
-    colors: ["#EF4444", "#14B8A6", "#A855F7", "#6D28D9"],
-  },
-  {
-    id: 8,
-    title: "Artificial Intelligence",
-    department: "Engineering Department",
-    originalPrice: 45.99,
-    salePrice: 25.99,
-    image: "https://picsum.photos/200/300",
-    colors: ["#22C55E", "#EAB308", "#3B82F6", "#F87171"],
-  },
-  {
-    id: 9,
-    title: "Machine Learning",
-    department: "Mathematics Department",
-    originalPrice: 42.99,
-    salePrice: 23.99,
-    image: "https://picsum.photos/200/300",
-    colors: ["#F43F5E", "#8B5CF6", "#EC4899", "#16A34A"],
-  },
-  {
-    id: 10,
-    title: "Graphic Design",
-    department: "English Department",
-    originalPrice: 16.48,
-    salePrice: 6.48,
-    image: "https://picsum.photos/200/300",
-    colors: ["#3B82F6", "#F97316", "#6B7280", "#1F2937"],
-  },
-  {
-    id: 11,
-    title: "Web Development",
-    department: "Computer Science",
-    originalPrice: 24.99,
-    salePrice: 12.99,
-    image: "https://picsum.photos/200/300",
-    colors: ["#3B82F6", "#F97316", "#6B7280", "#1F2937"],
-  },
-  {
-    id: 12,
-    title: "Digital Marketing",
-    department: "Business Department",
-    originalPrice: 19.99,
-    salePrice: 9.99,
-    image: "https://picsum.photos/200/300",
-    colors: ["#3B82F6", "#F97316", "#6B7280", "#1F2937"],
-  },
-  {
-    id: 13,
-    title: "Graphic Design",
-    department: "English Department",
-    originalPrice: 16.48,
-    salePrice: 6.48,
-    image: "https://picsum.photos/200/300",
-    colors: ["#3B82F6", "#F97316", "#6B7280", "#1F2937"],
-  },
-  {
-    id: 14,
-    title: "Web Development",
-    department: "Computer Science",
-    originalPrice: 24.99,
-    salePrice: 12.99,
-    image: "https://picsum.photos/200/300",
-    colors: ["#3B82F6", "#F97316", "#6B7280", "#1F2937"],
-  },
-  {
-    id: 15,
-    title: "Digital Marketing",
-    department: "Business Department",
-    originalPrice: 19.99,
-    salePrice: 9.99,
-    image: "https://picsum.photos/200/300",
-    colors: ["#3B82F6", "#F97316", "#6B7280", "#1F2937"],
-  },
-];
+import {
+  fetchProducts,
+  setFilter,
+  setSort,
+  setOffset,
+} from "../store/actions/productActions";
 
 const clients = [
   {
-    name: "MEN",
+    name: "LOGOIPSUM",
     image: "https://img.logoipsum.com/348.svg",
   },
   {
-    name: "WOMEN",
+    name: "LOGOIPSUM",
     image: "https://img.logoipsum.com/356.svg",
   },
   {
-    name: "ACCESSORIES",
+    name: "LOGOIPSUM",
     image: "https://img.logoipsum.com/350.svg",
   },
   {
-    name: "KIDS",
+    name: "LOGOIPSUM",
     image: "https://img.logoipsum.com/352.svg",
   },
   {
-    name: "SHOES",
+    name: "LOGOIPSUM",
     image: "https://img.logoipsum.com/354.svg",
   },
 ];
@@ -172,36 +38,32 @@ const clients = [
 export default function ShopPage() {
   let history = useHistory();
   let params = useParams();
-  // console.log("gender::::::" + params.gender);
-  // console.log("categoryName::::::" + params.categoryName);
-  // console.log("categoryId::::::" + params.categoryId);
+
   const dispatch = useDispatch();
-  const { categories, productList, total, fetchState, filter, sort } =
-    useSelector((state) => state.product);
+  const {
+    categories,
+    productList,
+    total,
+    fetchState,
+    filter,
+    sort,
+    offset,
+    limit,
+  } = useSelector((state) => state.product);
   const topCategories = [...categories]
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 5);
 
   const [searchInput, setSearchInput] = useState("");
+  const currentPage = Math.floor(offset / limit) + 1;
 
   useEffect(() => {
     dispatch(fetchProducts(params.categoryId));
-  }, [dispatch, params.categoryId, filter, sort]);
+  }, [dispatch, params.categoryId, filter, sort, offset, limit]);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 12;
-
-  // Calculate current products
-  const indexOfLastProduct = currentPage * itemsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
-  const currentProducts = products.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct
-  );
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const handlePageChange = (page) => {
+    const newOffset = (page - 1) * limit;
+    dispatch(setOffset(newOffset));
   };
 
   if (fetchState === "NOT_FETCHED") {
@@ -265,7 +127,10 @@ export default function ShopPage() {
               {/* TODO: Filtreleme işleminde her seferinde sayfa yenileniyor. Bunu engellemek gerekiyor. */}
               <button
                 className="px-4 py-2 bg-[#23A6F0] text-white rounded-r-md text-sm"
-                onClick={() => dispatch(setFilter(searchInput))}
+                onClick={() => {
+                  dispatch(setOffset(0));
+                  dispatch(setFilter(searchInput));
+                }}
               >
                 Filter
               </button>
@@ -273,7 +138,10 @@ export default function ShopPage() {
             <select
               className="px-4 py-2 border border-[#DEDEDE] rounded-md text-sm text-[#737373]"
               value={sort}
-              onChange={(e) => dispatch(setSort(e.target.value))}
+              onChange={(e) => {
+                dispatch(setOffset(0));
+                dispatch(setSort(e.target.value));
+              }}
             >
               <option value="">Sort by</option>
               <option value="price:asc">Price: Low to High</option>
@@ -291,26 +159,27 @@ export default function ShopPage() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 place-items-center">
-            {productList.map((product, index) => (
-              <div key={index} className="w-full flex justify-center my-8">
-                <button
-                  onClick={() => history.push("/shop/product")}
-                  className="w-full cursor-pointer"
-                >
-                  <ProductCard key={product.id} product={product} />
-                </button>
-              </div>
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 place-items-center">
+              {productList?.map((product, index) => (
+                <div key={index} className="w-full flex justify-center my-8">
+                  <button
+                    onClick={() => history.push("/shop/product")}
+                    className="w-full cursor-pointer"
+                  >
+                    <ProductCard key={product.id} product={product} />
+                  </button>
+                </div>
+              ))}
+            </div>
+            <Pagination
+              totalItems={total}
+              itemsPerPage={limit}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
+          </>
         )}
-
-        <Pagination
-          totalItems={products.length}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        />
       </div>
       <div className="client-cards px-4 lg:mx-35">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 place-items-center">
