@@ -42,6 +42,7 @@ import {
   UPDATE_CART_ITEM,
   SET_PAYMENT,
   SET_ADDRESS,
+  TOGGLE_CART_ITEM_CHECK,
 } from "../actions/shoppingCartActions";
 
 const initialState = {
@@ -105,6 +106,16 @@ const shoppingCartReducer = (state = initialState, action) => {
       return {
         ...state,
         address: action.payload,
+      };
+
+    case TOGGLE_CART_ITEM_CHECK:
+      return {
+        ...state,
+        cart: state.cart.map((item) =>
+          item.product.id === action.payload.productId
+            ? { ...item, checked: action.payload.checked ?? !item.checked }
+            : item
+        ),
       };
 
     default:

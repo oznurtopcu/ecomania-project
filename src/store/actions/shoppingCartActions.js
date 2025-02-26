@@ -26,6 +26,7 @@ export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const UPDATE_CART_ITEM = "UPDATE_CART_ITEM";
 export const SET_PAYMENT = "SET_PAYMENT";
 export const SET_ADDRESS = "SET_ADDRESS";
+export const TOGGLE_CART_ITEM_CHECK = "TOGGLE_CART_ITEM_CHECK";
 
 // Action creator'ları güncelliyoruz
 export const addToCart = (product) => ({
@@ -61,4 +62,9 @@ export const setPayment = (payment) => ({
 export const setAddress = (address) => ({
   type: SET_ADDRESS,
   payload: address,
+});
+
+export const toggleCartItemCheck = (productId, checked) => ({
+  type: TOGGLE_CART_ITEM_CHECK,
+  payload: { productId, checked },
 });
