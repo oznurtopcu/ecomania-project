@@ -66,6 +66,17 @@ export default function Header() {
     setIsDesktopShopOpen(!isDesktopShopOpen);
   };
 
+  const handleCategoryClick = (gender, categoryCode, categoryId, e) => {
+    e.preventDefault(); // Prevent default link behavior
+    history.push(`/shop/${gender}/${categoryCode}/${categoryId}`);
+    setIsDesktopShopOpen(false); // Close dropdown after selection
+  };
+
+  const handleHomeClick = (e) => {
+    e.preventDefault();
+    history.push("/");
+  };
+
   return (
     <header className="relative z-50">
       {/* Top navy blue header */}
@@ -98,18 +109,26 @@ export default function Header() {
       {/* Main header */}
       <div className="container mx-auto font-montserrat">
         <div className="flex justify-between items-center p-6 text-3xl text-[#737373]">
-          <a href="/">
+          {/* Logo - Updated */}
+          <button
+            onClick={handleHomeClick}
+            className="hover:opacity-80 transition-opacity"
+          >
             <img
               className="w-36"
               src="https://img.logoipsum.com/348.svg"
               alt="logo"
             />
-          </a>
-          {/* Desktop Navigation */}
+          </button>
+
+          {/* Desktop Navigation - Updated Home link */}
           <nav className="hidden lg:flex items-center gap-8 text-base relative">
-            <a href="/" className="text-[#737373] hover:text-[#252B42]">
+            <button
+              onClick={handleHomeClick}
+              className="text-[#737373] hover:text-[#252B42] transition-colors"
+            >
               Home
-            </a>
+            </button>
             {/* Shop Dropdown */}
             <div className="relative">
               <button
@@ -143,15 +162,20 @@ export default function Header() {
                       Kadın
                     </h3>
                     {womenCategories.map((category) => (
-                      <a
+                      <button
                         key={category.id}
-                        href={`/shop/kadin/${category.code.split(":")[1]}/${
-                          category.id
-                        }`}
-                        className="text-[#737373] hover:text-[#252B42] transition-colors"
+                        onClick={(e) =>
+                          handleCategoryClick(
+                            "kadin",
+                            category.code.split(":")[1],
+                            category.id,
+                            e
+                          )
+                        }
+                        className="text-left text-[#737373] hover:text-[#252B42] transition-colors"
                       >
                         {category.title}
-                      </a>
+                      </button>
                     ))}
                   </div>
 
@@ -161,15 +185,20 @@ export default function Header() {
                       Erkek
                     </h3>
                     {menCategories.map((category) => (
-                      <a
+                      <button
                         key={category.id}
-                        href={`/shop/erkek/${category.code.split(":")[1]}/${
-                          category.id
-                        }`}
-                        className="text-[#737373] hover:text-[#252B42] transition-colors"
+                        onClick={(e) =>
+                          handleCategoryClick(
+                            "erkek",
+                            category.code.split(":")[1],
+                            category.id,
+                            e
+                          )
+                        }
+                        className="text-left text-[#737373] hover:text-[#252B42] transition-colors"
                       >
                         {category.title}
-                      </a>
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -252,7 +281,12 @@ export default function Header() {
           }`}
         >
           <nav className="flex flex-col items-center gap-8 my-12 text-xl text-[#737373]">
-            <a href="/">Home</a>
+            <button
+              onClick={handleHomeClick}
+              className="text-[#737373] hover:text-[#252B42] transition-colors"
+            >
+              Home
+            </button>
 
             {/* Shop menu with dropdown */}
             <div className="w-full">
