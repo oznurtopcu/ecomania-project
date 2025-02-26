@@ -7,6 +7,7 @@ import ShopPage from "./pages/ShopPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
+import ShoppingCartPage from "./pages/ShoppingCartPage";
 import { verifyToken } from "./utils/auth";
 
 function App() {
@@ -31,6 +32,9 @@ function App() {
         </Route>
         <Route path="/login">
           <LoginPage />
+        </Route>
+        <Route path="/cart">
+          <ShoppingCartPage />
         </Route>
       </Switch>
     </PageContent>
