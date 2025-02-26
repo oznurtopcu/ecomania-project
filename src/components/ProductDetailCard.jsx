@@ -6,10 +6,17 @@ import {
   ChevronRight,
   ChevronLeft,
 } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../store/actions/shoppingCartActions";
 
 export default function ProductDetailCard() {
   const { productDetail, fetchState } = useSelector((state) => state.product);
+  const dispatch = useDispatch();
+  // ...existing code
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(productDetail));
+  };
 
   // Error state
   if (fetchState === "PRODUCT_ERROR") {
@@ -194,10 +201,10 @@ export default function ProductDetailCard() {
             <button
               className="p-2 border rounded-full hover:bg-gray-100 transition-colors duration-200 text-gray-700"
               aria-label="Add to cart"
+              onClick={handleAddToCart}
             >
               <ShoppingCart className="w-5 h-5" />
             </button>
-
             <button
               className="p-2 border rounded-full hover:bg-gray-100 transition-colors duration-200 text-gray-700"
               aria-label="Preview product"
