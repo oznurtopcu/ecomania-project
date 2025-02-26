@@ -21,6 +21,7 @@ import { logout } from "../store/actions/loginActions";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { fetchCategories } from "../store/actions/categoryActions";
+import CartDropdown from "../components/CartDropdown";
 
 export default function Header() {
   const [isClicked, setIsClicked] = useState(false);
@@ -37,6 +38,10 @@ export default function Header() {
 
   const womenCategories = categories.filter((cat) => cat.gender === "k");
   const menCategories = categories.filter((cat) => cat.gender === "e");
+
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const { cart } = useSelector((state) => state.shoppingCart);
+  const totalItems = cart.reduce((sum, item) => sum + item.count, 0);
 
   const handleLogout = async () => {
     try {
@@ -209,8 +214,23 @@ export default function Header() {
             <div className="hidden lg:flex items-center gap-4 text-[#23A6F0]">
               <Search />
               <div className="flex items-center gap-2">
-                <ShoppingCart />
-                <span className="text-base">1</span>
+                <div className="relative">
+                  <button
+                    className="flex items-center gap-2 text-[#23A6F0]"
+                    onClick={() => setIsCartOpen(!isCartOpen)}
+                  >
+                    <ShoppingCart />
+                    {totalItems > 0 && (
+                      <span className="bg-[#252B42] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                        {totalItems}
+                      </span>
+                    )}
+                  </button>
+                  <CartDropdown
+                    isOpen={isCartOpen}
+                    onClose={() => setIsCartOpen(false)}
+                  />
+                </div>
               </div>
               <div className="flex items-center gap-2">
                 <Heart />
