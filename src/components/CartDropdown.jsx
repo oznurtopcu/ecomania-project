@@ -5,9 +5,11 @@ import {
   removeFromCart,
   updateCartItem,
 } from "../store/actions/shoppingCartActions";
+import { useHistory } from "react-router-dom";
 
 export default function CartDropdown({ isOpen, onClose }) {
   const dispatch = useDispatch();
+  let history = useHistory();
   const { cart } = useSelector((state) => state.shoppingCart);
 
   const totalItems = cart.reduce((sum, item) => sum + item.count, 0);
@@ -15,6 +17,11 @@ export default function CartDropdown({ isOpen, onClose }) {
     (sum, item) => sum + item.product.price * item.count,
     0
   );
+
+  const handleGoToCart = () => {
+    history.push("/cart");
+    onClose();
+  };
 
   if (!isOpen) return null;
 
@@ -96,7 +103,10 @@ export default function CartDropdown({ isOpen, onClose }) {
                   ${totalPrice.toFixed(2)}
                 </span>
               </div>
-              <button className="w-full bg-blue-500 text-white py-2 text-base rounded hover:bg-blue-600">
+              <button
+                onClick={handleGoToCart}
+                className="w-full bg-blue-500 text-white py-2 text-base rounded hover:bg-blue-600"
+              >
                 Go To Cart
               </button>
             </div>
