@@ -4,6 +4,18 @@ import { useHistory } from "react-router-dom";
 import { api } from "../api/axios";
 import { toast } from "react-toastify";
 
+// Boş form state'i için initial değer
+const initialFormState = {
+  title: "",
+  name: "",
+  surname: "",
+  phone: "",
+  city: "",
+  district: "",
+  neighborhood: "",
+  address: "",
+};
+
 export default function CreateOrderPage() {
   const [addresses, setAddresses] = useState([]);
   const [showAddressForm, setShowAddressForm] = useState(false);
@@ -31,16 +43,7 @@ export default function CreateOrderPage() {
   };
 
   // Form state'i
-  const [formData, setFormData] = useState({
-    title: "",
-    name: "",
-    surname: "",
-    phone: "",
-    city: "",
-    district: "",
-    neighborhood: "",
-    address: "",
-  });
+  const [formData, setFormData] = useState(initialFormState);
 
   // Kullanıcı kontrolü ve adres getirme
   useEffect(() => {
@@ -77,16 +80,7 @@ export default function CreateOrderPage() {
       toast.success("Address added successfully");
       fetchAddresses();
       setShowAddressForm(false);
-      setFormData({
-        title: "",
-        name: "",
-        surname: "",
-        phone: "",
-        city: "",
-        district: "",
-        neighborhood: "",
-        address: "",
-      });
+      setFormData(initialFormState);
     } catch (error) {
       toast.error("Address could not be added");
     }
@@ -168,6 +162,7 @@ export default function CreateOrderPage() {
                     onClick={() => {
                       setShowAddressForm(true);
                       setEditingAddress(null);
+                      setFormData(initialFormState); // Form state'ini sıfırla
                     }}
                     className="bg-blue-600 text-white px-4 py-2 rounded-lg"
                   >
