@@ -3,6 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { api } from "../api/axios";
 import { toast } from "react-toastify";
+import {
+  fetchAddresses,
+  addAddress,
+  updateAddress,
+  deleteAddress,
+} from "../store/actions/clientActions";
+import { useForm } from "react-hook-form";
 
 // Boş form state'i için initial değer
 const initialFormState = {
@@ -101,15 +108,78 @@ const cities = [
 ];
 
 export default function CreateOrderPage() {
-  const [addresses, setAddresses] = useState([]);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { user, addressList } = useSelector((state) => state.client);
+  const { cart } = useSelector((state) => state.shoppingCart);
   const [showAddressForm, setShowAddressForm] = useState(false);
   const [selectedDeliveryAddress, setSelectedDeliveryAddress] = useState(null);
   const [selectedBillingAddress, setSelectedBillingAddress] = useState(null);
   const [editingAddress, setEditingAddress] = useState(null);
-  const [currentStep, setCurrentStep] = useState(1); // 1: Adres, 2: Ödeme
-  const history = useHistory();
-  const { user } = useSelector((state) => state.client);
-  const { cart } = useSelector((state) => state.shoppingCart);
+  const [currentStep, setCurrentStep] = useState(1);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    defaultValues: initialFormState,
+  });
+
+  // Form resetleme ve edit için kullanılacak
+  const resetFormWithData = (data = initialFormState) => {
+    Object.keys(data).forEach((key) => {
+      setValue(key, data[key]);
+    });
+  };
+
+  useEffect(() => {
+    if (!user?.name) {
+      history.push("/login");
+      return;
+    }
+    dispatch(fetchAddresses());
+  }, [dispatch, user, history]);
+
+  // Form handlers
+  const onSubmitAddress = (data) => {
+    if (editingAddress) {
+      dispatch(updateAddress({ ...data, id: editingAddress.id })).then(
+        (success) => {
+          if (success) {
+            toast.success("Address updated successfully");
+            setEditingAddress(null);
+            setShowAddressForm(false);
+            reset();
+          } else {
+            toast.error("Address could not be updated");
+          }
+        }
+      );
+    } else {
+      dispatch(addAddress(data)).then((success) => {
+        if (success) {
+          toast.success("Address added successfully");
+          setShowAddressForm(false);
+          reset();
+        } else {
+          toast.error("Address could not be added");
+        }
+      });
+    }
+  };
+
+  const handleDeleteAddress = (addressId) => {
+    dispatch(deleteAddress(addressId)).then((success) => {
+      if (success) {
+        toast.success("Address deleted successfully");
+      } else {
+        toast.error("Address could not be deleted");
+      }
+    });
+  };
 
   // Sepet hesaplamaları
   const calculateSubtotal = () => {
@@ -124,87 +194,6 @@ export default function CreateOrderPage() {
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
     return subtotal + shippingCost - discount;
-  };
-
-  // Form state'i
-  const [formData, setFormData] = useState(initialFormState);
-
-  // Kullanıcı kontrolü ve adres getirme
-  useEffect(() => {
-    if (!user?.name) {
-      history.push("/login");
-      return;
-    }
-    fetchAddresses();
-  }, [user, history]);
-
-  // Adresleri getir
-  const fetchAddresses = async () => {
-    try {
-      const token =
-        localStorage.getItem("token") || sessionStorage.getItem("token");
-      const response = await api.get("/user/address", {
-        headers: { Authorization: token },
-      });
-      setAddresses(response.data);
-    } catch (error) {
-      toast.error("Addresses could not be loaded");
-    }
-  };
-
-  // Yeni adres ekle
-  const handleAddAddress = async (e) => {
-    e.preventDefault();
-    try {
-      const token =
-        localStorage.getItem("token") || sessionStorage.getItem("token");
-      await api.post("/user/address", formData, {
-        headers: { Authorization: token },
-      });
-      toast.success("Address added successfully");
-      fetchAddresses();
-      setShowAddressForm(false);
-      setFormData(initialFormState);
-    } catch (error) {
-      toast.error("Address could not be added");
-    }
-  };
-
-  // Adres güncelle
-  const handleUpdateAddress = async (e) => {
-    e.preventDefault();
-    try {
-      const token =
-        localStorage.getItem("token") || sessionStorage.getItem("token");
-      await api.put(
-        "/user/address",
-        { ...formData, id: editingAddress.id },
-        {
-          headers: { Authorization: token },
-        }
-      );
-      toast.success("Address updated successfully");
-      fetchAddresses();
-      setEditingAddress(null);
-      setShowAddressForm(false);
-    } catch (error) {
-      toast.error("Address could not be updated");
-    }
-  };
-
-  // Adres sil
-  const handleDeleteAddress = async (addressId) => {
-    try {
-      const token =
-        localStorage.getItem("token") || sessionStorage.getItem("token");
-      await api.delete(`/user/address/${addressId}`, {
-        headers: { Authorization: token },
-      });
-      toast.success("Address deleted successfully");
-      fetchAddresses();
-    } catch (error) {
-      toast.error("Address could not be deleted");
-    }
   };
 
   return (
@@ -246,7 +235,7 @@ export default function CreateOrderPage() {
                     onClick={() => {
                       setShowAddressForm(true);
                       setEditingAddress(null);
-                      setFormData(initialFormState); // Form state'ini sıfırla
+                      resetFormWithData(); // Form state'ini sıfırla
                     }}
                     className="bg-blue-600 text-white px-4 py-2 rounded-lg"
                   >
@@ -255,7 +244,7 @@ export default function CreateOrderPage() {
                 </div>
 
                 <div className="space-y-4">
-                  {addresses.map((address) => (
+                  {addressList.map((address) => (
                     <div key={address.id} className="border rounded-lg p-4">
                       <div className="flex justify-between items-start">
                         <div>
@@ -276,7 +265,7 @@ export default function CreateOrderPage() {
                             onClick={() => {
                               setEditingAddress(address);
                               setShowAddressForm(true);
-                              setFormData(address);
+                              resetFormWithData(address);
                             }}
                             className="text-blue-600 hover:text-blue-800"
                           >
@@ -321,107 +310,149 @@ export default function CreateOrderPage() {
                   <h2 className="text-lg font-semibold mb-4">
                     {editingAddress ? "Edit Address" : "Add New Address"}
                   </h2>
-                  <form
-                    onSubmit={
-                      editingAddress ? handleUpdateAddress : handleAddAddress
-                    }
-                  >
+                  <form onSubmit={handleSubmit(onSubmitAddress)}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <input
-                        type="text"
-                        placeholder="Address Title"
-                        value={formData.title}
-                        onChange={(e) =>
-                          setFormData({ ...formData, title: e.target.value })
-                        }
-                        className="p-2 border rounded"
-                        required
-                      />
-                      <input
-                        type="text"
-                        placeholder="Name"
-                        value={formData.name}
-                        onChange={(e) =>
-                          setFormData({ ...formData, name: e.target.value })
-                        }
-                        className="p-2 border rounded"
-                        required
-                      />
-                      <input
-                        type="text"
-                        placeholder="Surname"
-                        value={formData.surname}
-                        onChange={(e) =>
-                          setFormData({ ...formData, surname: e.target.value })
-                        }
-                        className="p-2 border rounded"
-                        required
-                      />
-                      <input
-                        type="tel"
-                        placeholder="Phone"
-                        value={formData.phone}
-                        onChange={(e) =>
-                          setFormData({ ...formData, phone: e.target.value })
-                        }
-                        className="p-2 border rounded"
-                        required
-                      />
-                      <select
-                        value={formData.city}
-                        onChange={(e) =>
-                          setFormData({ ...formData, city: e.target.value })
-                        }
-                        className="p-2 border rounded"
-                        required
-                      >
-                        <option value="">Select City</option>
-                        {cities.map((city) => (
-                          <option key={city} value={city.toLowerCase()}>
-                            {city}
-                          </option>
-                        ))}
-                      </select>
-                      <input
-                        type="text"
-                        placeholder="District"
-                        value={formData.district}
-                        onChange={(e) =>
-                          setFormData({ ...formData, district: e.target.value })
-                        }
-                        className="p-2 border rounded"
-                        required
-                      />
-                      <input
-                        type="text"
-                        placeholder="Neighborhood"
-                        value={formData.neighborhood}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            neighborhood: e.target.value,
-                          })
-                        }
-                        className="p-2 border rounded"
-                        required
-                      />
-                      <textarea
-                        placeholder="Address Details"
-                        value={formData.address}
-                        onChange={(e) =>
-                          setFormData({ ...formData, address: e.target.value })
-                        }
-                        className="p-2 border rounded col-span-2"
-                        rows="3"
-                        required
-                      />
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="Address Title"
+                          {...register("title", {
+                            required: "Title is required",
+                            minLength: {
+                              value: 3,
+                              message: "Title must be at least 3 characters",
+                            },
+                          })}
+                          className="p-2 border rounded w-full"
+                        />
+                        {errors.title && (
+                          <p className="text-red-500 text-sm mt-1">
+                            {errors.title.message}
+                          </p>
+                        )}
+                      </div>
+
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="Name"
+                          {...register("name", {
+                            required: "Name is required",
+                            pattern: {
+                              value: /^[A-Za-z\s]+$/,
+                              message: "Please enter a valid name",
+                            },
+                          })}
+                          className="p-2 border rounded w-full"
+                        />
+                        {errors.name && (
+                          <p className="text-red-500 text-sm mt-1">
+                            {errors.name.message}
+                          </p>
+                        )}
+                      </div>
+
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="Surname"
+                          {...register("surname", {
+                            required: "Surname is required",
+                            pattern: {
+                              value: /^[A-Za-z\s]+$/,
+                              message: "Please enter a valid surname",
+                            },
+                          })}
+                          className="p-2 border rounded w-full"
+                        />
+                        {errors.surname && (
+                          <p className="text-red-500 text-sm mt-1">
+                            {errors.surname.message}
+                          </p>
+                        )}
+                      </div>
+
+                      <div>
+                        <input
+                          type="tel"
+                          placeholder="Phone"
+                          {...register("phone", {
+                            required: "Phone is required",
+                            pattern: {
+                              value: /^[0-9]{10,11}$/,
+                              message: "Please enter a valid phone number",
+                            },
+                          })}
+                          className="p-2 border rounded w-full"
+                        />
+                        {errors.phone && (
+                          <p className="text-red-500 text-sm mt-1">
+                            {errors.phone.message}
+                          </p>
+                        )}
+                      </div>
+
+                      <div>
+                        <select
+                          {...register("city", {
+                            required: "City is required",
+                          })}
+                          className="p-2 border rounded w-full"
+                        >
+                          <option value="">Select City</option>
+                          {cities.map((city) => (
+                            <option key={city} value={city.toLowerCase()}>
+                              {city}
+                            </option>
+                          ))}
+                        </select>
+                        {errors.city && (
+                          <p className="text-red-500 text-sm mt-1">
+                            {errors.city.message}
+                          </p>
+                        )}
+                      </div>
+
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="District"
+                          {...register("district", {
+                            required: "District is required",
+                          })}
+                          className="p-2 border rounded w-full"
+                        />
+                        {errors.district && (
+                          <p className="text-red-500 text-sm mt-1">
+                            {errors.district.message}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="col-span-2">
+                        <textarea
+                          placeholder="Neighborhood"
+                          {...register("neighborhood", {
+                            required: "Address details are required",
+                          })}
+                          className="p-2 border rounded w-full"
+                          rows="3"
+                        />
+                        {errors.neighborhood && (
+                          <p className="text-red-500 text-sm mt-1">
+                            {errors.neighborhood.message}
+                          </p>
+                        )}
+                      </div>
                     </div>
+
                     <div className="flex justify-end gap-4 mt-4">
                       <button
                         type="button"
                         onClick={() => {
                           setShowAddressForm(false);
                           setEditingAddress(null);
+                          reset();
                         }}
                         className="px-4 py-2 border rounded"
                       >
