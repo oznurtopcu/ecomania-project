@@ -13,7 +13,6 @@ const initialFormState = {
   city: "",
   district: "",
   neighborhood: "",
-  address: "",
 };
 
 export default function CreateOrderPage() {
