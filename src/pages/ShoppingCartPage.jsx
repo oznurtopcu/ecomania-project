@@ -1,15 +1,19 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Trash2, Minus, Plus } from "lucide-react";
 import {
   removeFromCart,
   updateCartItem,
   toggleCartItemCheck,
 } from "../store/actions/shoppingCartActions";
+import { toast } from "react-toastify";
 
 export default function ShoppingCartPage() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { cart } = useSelector((state) => state.shoppingCart);
+  const { user } = useSelector((state) => state.client);
 
   const calculateSubtotal = () => {
     return cart
@@ -37,6 +41,15 @@ export default function ShoppingCartPage() {
 
   const handleToggleCheck = (productId) => {
     dispatch(toggleCartItemCheck(productId));
+  };
+
+  const handleCreateOrder = () => {
+    if (!user) {
+      history.push("/login");
+      toast.info("Please login to continue");
+      return;
+    }
+    history.push("/create-order");
   };
 
   return (
@@ -213,7 +226,10 @@ export default function ShoppingCartPage() {
               </div>
 
               {/* Checkout Button */}
-              <button className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">
+              <button
+                onClick={handleCreateOrder}
+                className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+              >
                 Create Order
               </button>
             </div>
