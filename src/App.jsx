@@ -9,6 +9,7 @@ import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import ShoppingCartPage from "./pages/ShoppingCartPage";
 import { verifyToken } from "./utils/auth";
+import CreateOrderPage from "./pages/CreateOrderPage";
 
 function App() {
   useEffect(() => {
@@ -35,6 +36,9 @@ function App() {
         </Route>
         <Route path="/cart">
           <ShoppingCartPage />
+        </Route>
+        <Route path="/create-order">
+          <CreateOrderPage />
         </Route>
       </Switch>
     </PageContent>
