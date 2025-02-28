@@ -107,8 +107,10 @@ export const fetchCreditCards = () => async (dispatch) => {
       headers: { Authorization: token },
     });
     dispatch(setCreditCards(response.data));
+    return true;
   } catch (error) {
     console.error("Error fetching credit cards:", error);
+    return false;
   }
 };
 
