@@ -126,6 +126,7 @@ export default function CreateOrderPage() {
     formState: { errors },
   } = useForm({
     defaultValues: initialFormState,
+    mode: "onBlur",
   });
 
   // Form resetleme ve edit için kullanılacak
@@ -142,6 +143,13 @@ export default function CreateOrderPage() {
     }
     dispatch(fetchAddresses());
   }, [dispatch, user, history]);
+
+  //edit işlemi tamamlandıktan sonra form alanı sıfırlanır
+  useEffect(() => {
+    if (editingAddress) {
+      resetFormWithData(editingAddress);
+    }
+  }, [editingAddress]);
 
   // Form handlers
   const onSubmitAddress = (data) => {
