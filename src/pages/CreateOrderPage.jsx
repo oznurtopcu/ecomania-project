@@ -91,6 +91,7 @@ export default function CreateOrderPage() {
       history.push("/login");
       return;
     }
+    dispatch(fetchCreditCards());
     dispatch(fetchAddresses());
   }, [dispatch, user, history]);
 
@@ -200,6 +201,46 @@ export default function CreateOrderPage() {
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
     return subtotal + shippingCost - discount;
+  };
+
+  const handlePlaceOrder = async () => {
+    if (!selectedDeliveryAddress || !selectedBillingAddress || !selectedCard) {
+      toast.error(
+        "Please select delivery address, billing address and payment method"
+      );
+      return;
+    }
+    console.log("BUTONA TIKLANDI!!");
+
+    // try {
+    //   const orderData = {
+    //     delivery_address_id: selectedDeliveryAddress.id,
+    //     billing_address_id: selectedBillingAddress.id,
+    //     card_id: selectedCard.id,
+    //     items: cart
+    //       .filter((item) => item.checked)
+    //       .map((item) => ({
+    //         product_id: item.product.id,
+    //         quantity: item.count,
+    //       })),
+    //     total_amount: calculateTotal(),
+    //   };
+
+    //   const token =
+    //     localStorage.getItem("token") || sessionStorage.getItem("token");
+    //   const response = await api.post("/order", orderData, {
+    //     headers: { Authorization: token },
+    //   });
+
+    //   if (response.data) {
+    //     toast.success("Order placed successfully!");
+    //     // Başarılı siparişten sonra alışveriş sayfasına yönlendir
+    //     history.push("/orders");
+    //   }
+    // } catch (error) {
+    //   console.error("Error placing order:", error);
+    //   toast.error(error.response?.data?.message || "Failed to place order");
+    // }
   };
 
   return (
