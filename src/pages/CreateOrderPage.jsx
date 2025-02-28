@@ -41,6 +41,10 @@ export default function CreateOrderPage() {
   const [selectedBillingAddress, setSelectedBillingAddress] = useState(null);
   const [editingAddress, setEditingAddress] = useState(null);
   const [currentStep, setCurrentStep] = useState(1);
+  const [showCardForm, setShowCardForm] = useState(false);
+  const [editingCard, setEditingCard] = useState(null);
+  const [selectedCard, setSelectedCard] = useState(null);
+  const { creditCards } = useSelector((state) => state.client);
 
   const {
     register,
@@ -50,6 +54,17 @@ export default function CreateOrderPage() {
     formState: { errors },
   } = useForm({
     defaultValues: initialFormState,
+    mode: "onBlur",
+  });
+
+  const {
+    register: registerCard,
+    handleSubmit: handleSubmitCard,
+    reset: resetCard,
+    setValue: setCardValue,
+    formState: { errors: cardErrors },
+  } = useForm({
+    defaultValues: initialCardState,
     mode: "onBlur",
   });
 
