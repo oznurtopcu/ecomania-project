@@ -97,3 +97,62 @@ export const deleteAddress = (addressId) => async (dispatch) => {
     return false;
   }
 };
+
+// Kredi kartı işlemleri için thunk actions
+export const fetchCreditCards = () => async (dispatch) => {
+  try {
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
+    const response = await api.get("/user/card", {
+      headers: { Authorization: token },
+    });
+    dispatch(setCreditCards(response.data));
+  } catch (error) {
+    console.error("Error fetching credit cards:", error);
+  }
+};
+
+export const addCreditCard = (cardData) => async (dispatch) => {
+  try {
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
+    await api.post("/user/card", cardData, {
+      headers: { Authorization: token },
+    });
+    await dispatch(fetchCreditCards());
+    return true;
+  } catch (error) {
+    console.error("Error adding credit card:", error);
+    return false;
+  }
+};
+
+export const updateCreditCard = (cardData) => async (dispatch) => {
+  try {
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
+    await api.put("/user/card", cardData, {
+      headers: { Authorization: token },
+    });
+    await dispatch(fetchCreditCards());
+    return true;
+  } catch (error) {
+    console.error("Error updating credit card:", error);
+    return false;
+  }
+};
+
+export const deleteCreditCard = (cardId) => async (dispatch) => {
+  try {
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
+    await api.delete(`/user/card/${cardId}`, {
+      headers: { Authorization: token },
+    });
+    await dispatch(fetchCreditCards());
+    return true;
+  } catch (error) {
+    console.error("Error deleting credit card:", error);
+    return false;
+  }
+};
