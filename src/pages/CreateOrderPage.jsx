@@ -75,6 +75,13 @@ export default function CreateOrderPage() {
     });
   };
 
+  // Kart için form resetleme fonksiyonu
+  const resetCardWithData = (data = initialCardState) => {
+    Object.keys(data).forEach((key) => {
+      setCardValue(key, data[key]);
+    });
+  };
+
   useEffect(() => {
     if (!user?.name) {
       history.push("/login");
@@ -89,6 +96,13 @@ export default function CreateOrderPage() {
       resetFormWithData(editingAddress);
     }
   }, [editingAddress]);
+
+  // Kart için useEffect
+  useEffect(() => {
+    if (editingCard) {
+      resetCardWithData(editingCard);
+    }
+  }, [editingCard]);
 
   // Form handlers
   const onSubmitAddress = (data) => {
@@ -118,12 +132,53 @@ export default function CreateOrderPage() {
     }
   };
 
+  // Kart form handlers
+  const onSubmitCard = (data) => {
+    if (editingCard) {
+      dispatch(updateCreditCard({ ...data, id: editingCard.id })).then(
+        (success) => {
+          if (success) {
+            toast.success("Card updated successfully");
+            setEditingCard(null);
+            setShowCardForm(false);
+            resetCard();
+          } else {
+            toast.error("Card could not be updated");
+          }
+        }
+      );
+    } else {
+      dispatch(addCreditCard(data)).then((success) => {
+        if (success) {
+          toast.success("Card added successfully");
+          setShowCardForm(false);
+          resetCard();
+        } else {
+          toast.error("Card could not be added");
+        }
+      });
+    }
+  };
+
   const handleDeleteAddress = (addressId) => {
     dispatch(deleteAddress(addressId)).then((success) => {
       if (success) {
         toast.success("Address deleted successfully");
       } else {
         toast.error("Address could not be deleted");
+      }
+    });
+  };
+
+  const handleDeleteCard = (cardId) => {
+    dispatch(deleteCreditCard(cardId)).then((success) => {
+      if (success) {
+        toast.success("Card deleted successfully");
+        if (selectedCard?.id === cardId) {
+          setSelectedCard(null);
+        }
+      } else {
+        toast.error("Card could not be deleted");
       }
     });
   };
