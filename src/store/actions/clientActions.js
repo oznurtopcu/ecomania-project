@@ -6,6 +6,7 @@ export const SET_ROLES = "SET_ROLES";
 export const SET_THEME = "SET_THEME";
 export const SET_LANGUAGE = "SET_LANGUAGE";
 export const SET_ADDRESS_LIST = "SET_ADDRESS_LIST";
+export const SET_CREDIT_CARDS = "SET_CREDIT_CARDS";
 
 // Action Creators
 export const setUser = (user) => ({
@@ -31,6 +32,11 @@ export const setLanguage = (language) => ({
 export const setAddressList = (addresses) => ({
   type: SET_ADDRESS_LIST,
   payload: addresses,
+});
+
+export const setCreditCards = (creditCards) => ({
+  type: SET_CREDIT_CARDS,
+  payload: creditCards,
 });
 
 // Thunk Actions
