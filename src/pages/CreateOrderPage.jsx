@@ -487,13 +487,207 @@ export default function CreateOrderPage() {
           {currentStep === 2 && (
             <div className="bg-white rounded-lg shadow p-6">
               <h2 className="text-lg font-semibold mb-4">Payment Method</h2>
-              {/* Ödeme seçenekleri buraya eklenecek */}
-              <button
-                onClick={() => setCurrentStep(1)}
-                className="mt-4 px-4 py-2 border rounded"
-              >
-                Back to Addresses
-              </button>
+
+              {/* Kayıtlı Kartlar */}
+              <div className="mb-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="font-medium">Your Saved Cards</h3>
+                  <button
+                    onClick={() => {
+                      setShowCardForm(true);
+                      setEditingCard(null);
+                      resetCard();
+                    }}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+                  >
+                    Add New Card
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  {creditCards?.map((card) => (
+                    <div key={card.id} className="border rounded-lg p-4">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h4 className="font-medium">{card.name_on_card}</h4>
+                          <p className="text-sm text-gray-600">
+                            **** **** **** {card.card_no.slice(-4)}
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            Expires: {card.expire_month}/{card.expire_year}
+                          </p>
+                        </div>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => {
+                              setEditingCard(card);
+                              setShowCardForm(true);
+                            }}
+                            className="text-blue-600 hover:text-blue-800"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDeleteCard(card.id)}
+                            className="text-red-600 hover:text-red-800"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                      <div className="mt-4">
+                        <label className="flex items-center gap-2">
+                          <input
+                            type="radio"
+                            name="selectedCard"
+                            checked={selectedCard?.id === card.id}
+                            onChange={() => setSelectedCard(card)}
+                          />
+                          Use this card
+                        </label>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Kart Formu */}
+              {showCardForm && (
+                <div className="border-t pt-6">
+                  <h3 className="font-medium mb-4">
+                    {editingCard ? "Edit Card" : "Add New Card"}
+                  </h3>
+                  <form onSubmit={handleSubmitCard(onSubmitCard)}>
+                    <div className="space-y-4">
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="Name on Card"
+                          {...registerCard("name_on_card", {
+                            required: "Name on card is required",
+                          })}
+                          className="p-2 border rounded w-full"
+                        />
+                        {cardErrors.name_on_card && (
+                          <p className="text-red-500 text-sm mt-1">
+                            {cardErrors.name_on_card.message}
+                          </p>
+                        )}
+                      </div>
+
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="Card Number"
+                          {...registerCard("card_no", {
+                            required: "Card number is required",
+                            pattern: {
+                              value: /^[0-9]{16}$/,
+                              message:
+                                "Please enter a valid 16-digit card number",
+                            },
+                          })}
+                          className="p-2 border rounded w-full"
+                        />
+                        {cardErrors.card_no && (
+                          <p className="text-red-500 text-sm mt-1">
+                            {cardErrors.card_no.message}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <select
+                            {...registerCard("expire_month", {
+                              required: "Required",
+                            })}
+                            className="p-2 border rounded w-full"
+                          >
+                            <option value="">Month</option>
+                            {Array.from({ length: 12 }, (_, i) => i + 1).map(
+                              (month) => (
+                                <option
+                                  key={month}
+                                  value={month.toString().padStart(2, "0")}
+                                >
+                                  {month.toString().padStart(2, "0")}
+                                </option>
+                              )
+                            )}
+                          </select>
+                          {cardErrors.expire_month && (
+                            <p className="text-red-500 text-sm mt-1">
+                              {cardErrors.expire_month.message}
+                            </p>
+                          )}
+                        </div>
+
+                        <div>
+                          <select
+                            {...registerCard("expire_year", {
+                              required: "Required",
+                            })}
+                            className="p-2 border rounded w-full"
+                          >
+                            <option value="">Year</option>
+                            {Array.from(
+                              { length: 10 },
+                              (_, i) => new Date().getFullYear() + i
+                            ).map((year) => (
+                              <option key={year} value={year}>
+                                {year}
+                              </option>
+                            ))}
+                          </select>
+                          {cardErrors.expire_year && (
+                            <p className="text-red-500 text-sm mt-1">
+                              {cardErrors.expire_year.message}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end gap-4 mt-6">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setShowCardForm(false);
+                          setEditingCard(null);
+                          resetCard();
+                        }}
+                        className="px-4 py-2 border rounded"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        className="px-4 py-2 bg-blue-600 text-white rounded"
+                      >
+                        {editingCard ? "Update" : "Save"} Card
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              )}
+
+              {/* Navigation Buttons */}
+              <div className="flex justify-between mt-8">
+                <button
+                  onClick={() => setCurrentStep(1)}
+                  className="px-4 py-2 border rounded"
+                >
+                  Back to Addresses
+                </button>
+                <button
+                  onClick={handlePlaceOrder}
+                  disabled={!selectedCard}
+                  className="px-8 py-2 bg-blue-600 text-white rounded disabled:bg-gray-400"
+                >
+                  Place Order
+                </button>
+              </div>
             </div>
           )}
         </div>
